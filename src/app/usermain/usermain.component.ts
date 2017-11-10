@@ -51,6 +51,7 @@ export class UsermainComponent implements OnInit {
   };
   secondUser = '';
   amt= '';
+  secUser = '';
   x = '';
   user = '';
   addEx = false;
@@ -127,4 +128,7 @@ export class UsermainComponent implements OnInit {
   showExpSet = () => this.displayExpense = this.displayExpense ? false : true;
   editExpSet = () => { this.displayExpense = this.displayExpense ? false : true;
      this.editEx = this.editEx ? false : true; }
+  editExpense() {
+    console.log('expense');
+  }
 }

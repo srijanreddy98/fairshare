@@ -1,6 +1,6 @@
 <a [style.display] = "!addEx ? 'block' : 'none'" (click)="addExpSet()"><i class="fa fa-plus"></i></a><br>
 <div class="overlay" [style.display] = "addEx ? 'block' : 'none'">
-  <form style="margin-left:50px" role="form" class="mx-auto text-center app-login-form" (ngSubmit)="addExpense(addexp)" #addexp="ngForm">
+  <form style="margin-left:50px" role="form" class="mx-auto text-center app-login-form" (ngSubmit)="addExpense()" #addexp="ngForm">
     <div class="form-group mb-3">
         <label for="secUser">Second:</label>
       <input class="form-control" placeholder="Name" required autofocus [(ngModel)] = "secUser" name="secUser" id = "secUser">
@@ -35,7 +35,7 @@
 
 
 <div class="overlay" [style.display] = "displayExpense ? 'block' : 'none'">
-  <form style="margin-left:50px" role="form" class="mx-auto text-center app-login-form" (ngSubmit)="addExpense(addexp)" #addexp="ngForm">
+  <form style="margin-left:50px" role="form" class="mx-auto text-center app-login-form"  >
     <div class="form-group mb-3">
         First: {{currentSelected.first_user}}
     </div>
@@ -61,7 +61,7 @@
 
 
 <div class="overlay" [style.display]="editEx ? 'block' : 'none'">
-  <form style="margin-left:50px" role="form" class="mx-auto text-center app-login-form" (ngSubmit)="editExpense(editexp)" #editexp="ngForm">
+  <form style="margin-left:50px" role="form" class="mx-auto text-center app-login-form" (ngSubmit)="editExpense()" #editexp="ngForm">
     <div class="form-group mb-3">
       <label for="secUser">Second:</label>
       <input class="form-control" placeholder={{currentSelected.second_user}} required autofocus [(ngModel)]="secUser" name="secUser" id="secUser">
@@ -94,7 +94,7 @@
   </form>
 </div>
 <div class="container">
-  <h2>{{this._cookieService.get('username')}} owe them.</h2>
+  <h2>You owe them.</h2>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -113,7 +113,7 @@
   </table>
 </div>
 <div class="container">
-  <h2>They owe {{this._cookieService.get('username')}}</h2>
+  <h2>They owe you</h2>
   <table class="table table-striped">
     <thead>
       <tr>
