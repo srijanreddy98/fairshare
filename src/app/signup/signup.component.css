@@ -1,0 +1,10 @@
+@media(min-width: 768px) {
+    .field-label-responsive {
+      padding-top: .5rem;
+      text-align: right;
+    }
+  }
+body,html {
+    background-repeat: no-repeat;
+    background-image: linear-gradient( rgb(116, 211, 255),rgb(250, 253, 255));
+}

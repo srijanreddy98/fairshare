@@ -1,0 +1,131 @@
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form (ngSubmit)="onSave()" #f="ngForm">
+        <div id="user-data">
+          <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" ngModel name="username" required #username="ngModel">
+                <span class="help-block" *ngIf="username.touched && username.value.length<8">Your Password should be atleast eigth charecters long</span>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" ngModel name="password" required #password="ngModel">
+            <span class="help-block" *ngIf="password.touched && password.value.length<8">Your Password should be atleast eigth charecters long</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Login</button>
+      </form>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="container">
+  <div class="card card-container">
+      <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+      <p id="profile-name" class="profile-name-card"></p>
+      <form class="form-signin" (ngSubmit)="onSave()" #f="ngForm">
+          <span id="reauth-email" class="reauth-email"></span>
+          <input type="email" id="inputEmail" class="form-control" placeholder="Email or Username" required autofocus ngModel name="username">
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required ngModel name="password">
+          <div id="remember" class="checkbox">
+              <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+              </label>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+      </form>
+      <a href="#" class="forgot-password">
+          Forgot the password?
+      </a>
+  </div>
+</div>
+<button (click)="Signup()">ClickME</button> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>
+      
+        Login &middot; 
+      
+    </title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+
+    <style>
+      /* note: this is a hack for ios iframe for bootstrap themes shopify page */
+      /* this chunk of css is not part of the toolkit :) */
+      body {
+        width: 1px;
+        min-width: 100%;
+        *width: 100%;
+      }
+    </style>
+
+  </head>
+
+
+<body>
+  
+
+
+
+<div class="container-fluid container-fill-height">
+  <div class="container-content-middle">
+    <form role="form" class="mx-auto text-center app-login-form" (ngSubmit)="onSave()" #f="ngForm">
+
+      <a href="../index.html" class="app-brand mb-5">
+        <img src="assets/img/brand.png" alt="brand">
+      </a><br>
+      <div class="app-brand">
+        <h3 style="font-style: italic; color:rgb(48, 151, 209)">FairShare</h3>
+      </div>
+      <div class="form-group">
+        <input class="form-control" placeholder="Username" required autofocus ngModel name="username">
+      </div>
+
+      <div class="form-group mb-3">
+        <input type="password" class="form-control" placeholder="Password" required ngModel name="password">
+      </div>
+
+      <div class="mb-5">
+        <button class="btn btn-primary" type="submit">Log In</button>
+        <button class="btn btn-secondary" (click) = "Signup()">Sign up</button>
+      </div>
+
+      <footer class="screen-login">
+        <a href="#" class="text-muted">Forgot password</a>
+      </footer>
+    </form>
+  </div>
+</div>
+
+
+    <!-- <script src="../assets/js/jquery.min.js"></script>    
+    <script src="../assets/js/tether.min.js"></script>
+    <script src="../assets/js/chart.js"></script>
+    <script src="../assets/js/toolkit.js"></script>
+    <script src="../assets/js/application.js"></script> -->
+    <script>
+      // execute/clear BS loaders for docs
+      $(function(){
+        if (window.BS&&window.BS.loader&&window.BS.loader.length) {
+          while(BS.loader.length){(BS.loader.pop())()}
+        }
+      })
+
+    </script>
+  </body>
+</html>
+
+

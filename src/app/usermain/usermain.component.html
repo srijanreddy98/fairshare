@@ -1,0 +1,133 @@
+<a [style.display] = "!addEx ? 'block' : 'none'" (click)="addExpSet()"><i class="fa fa-plus"></i></a><br>
+<div class="overlay" [style.display] = "addEx ? 'block' : 'none'">
+  <form style="margin-left:50px" role="form" class="mx-auto text-center app-login-form" (ngSubmit)="addExpense(addexp)" #addexp="ngForm">
+    <div class="form-group mb-3">
+        <label for="secUser">Second:</label>
+      <input class="form-control" placeholder="Name" required autofocus [(ngModel)] = "secUser" name="secUser" id = "secUser">
+    </div>
+    <div class="form-group mb-3">
+
+        <label for="des" class="col-md-2">Description:</label>
+        <input class="form-control" placeholder="Name" required autofocus ngModel name="des" id="des">
+      
+    </div>
+    <div class="form-group mb-3">
+     
+      <label for="amt" class="col-md-2">Amount:</label>
+      <input type="text" class="form-control" placeholder="amt" required [(ngModel)]= "amt" name="amt" id="amt" >
+   
+  </div>
+  <div class="form-group col-md-4">
+    <label for="typeS">State</label>
+    <select id="typeS" name="typeS" ngModel class="form-control">
+      <option value="1" selected >Paid by you and split equally</option>
+      <option value="2">Paid by {{ secUser }} and split equally</option>
+      <option value="3">{{ secUser }} Owes you {{amt}}</option>
+      <option value="4">You Owe {{ secUser }} {{amt}}</option>
+    </select>
+  </div>
+    <div class="mb-5">
+      <button class="btn btn-success" type="submit">Add Expense</button>
+      <button class="btn btn-secondary" (click)="addExpSet()">Cancel</button>
+    </div>
+  </form>
+</div>
+
+
+<div class="overlay" [style.display] = "displayExpense ? 'block' : 'none'">
+  <form style="margin-left:50px" role="form" class="mx-auto text-center app-login-form" (ngSubmit)="addExpense(addexp)" #addexp="ngForm">
+    <div class="form-group mb-3">
+        First: {{currentSelected.first_user}}
+    </div>
+    <div class="form-group mb-3">
+        Second:
+         {{currentSelected.second_user}}
+    </div>
+    <div class="form-group mb-3" >
+    Description:
+   {{currentSelected.description}}
+    </div>
+    <div class="form-group mb-3">
+        Amount:
+           {{currentSelected.amount}}     
+    </div>
+    <div class="mb-5">
+      <button class="btn btn-danger" type="submit">Delete Expense</button>
+      <button class="btn btn-warning" (click)="editExpSet()">Edit Expense</button>
+      <button class="btn btn-secondary" (click)="showExpSet()">Cancel</button>
+    </div>
+  </form>  
+</div>
+
+
+<div class="overlay" [style.display]="editEx ? 'block' : 'none'">
+  <form style="margin-left:50px" role="form" class="mx-auto text-center app-login-form" (ngSubmit)="editExpense(editexp)" #editexp="ngForm">
+    <div class="form-group mb-3">
+      <label for="secUser">Second:</label>
+      <input class="form-control" placeholder={{currentSelected.second_user}} required autofocus [(ngModel)]="secUser" name="secUser" id="secUser">
+    </div>
+    <div class="form-group mb-3">
+
+      <label for="des" class="col-md-2">Description:</label>
+      <input class="form-control" placeholder={{currentSelected.description}} required autofocus ngModel name="des" id="des">
+
+    </div>
+    <div class="form-group mb-3">
+
+      <label for="amt" class="col-md-2">Amount:</label>
+      <input type="text" class="form-control" placeholder={{currentSelected.amount}} required [(ngModel)]="amt" name="amt" id="amt">
+
+    </div>
+    <div class="form-group col-md-4">
+      <label for="typeS">State</label>
+      <select id="typeS" name="typeS" ngModel class="form-control">
+        <option value="1">Paid by you and split equally</option>
+        <option value="2">Paid by {{ secUser }} and split equally</option>
+        <option value="3">{{ secUser }} Owes you {{amt}}</option>
+        <option value="4">You Owe {{ secUser }} {{amt}}</option>
+      </select>
+    </div>
+    <div class="mb-5">
+      <button class="btn btn-outline-warning" type="submit">Update Expense</button>
+      <button class="btn btn-secondary" (click)="editExpSet()">Cancel</button>
+    </div>
+  </form>
+</div>
+<div class="container">
+  <h2>{{this._cookieService.get('username')}} owe them.</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Friend</th>
+        <!-- <th>Lastname</th> -->
+        <th>Amount</th>
+        <th>Group Name</th>
+      </tr>
+    </thead>
+      <tr *ngFor=" let p of owesMeARR;let i = index" (click)="fun(i)" >
+        <!--  <td>{{p.first_user}}</td> -->
+        <td>{{p.second_user}}</td>
+        <td>{{p.amount}}</td>
+        <td ng-if="p.gid=='-1'">No Group</td>
+      </tr>
+  </table>
+</div>
+<div class="container">
+  <h2>They owe {{this._cookieService.get('username')}}</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Friend</th>
+        <!-- <th>Lastname</th> -->
+        <th>Amount</th>
+        <th>Group Name</th>
+      </tr>
+    </thead>
+    <tr *ngFor=" let p of owesMeARR">
+      <td>{{p.first_user}}</td>
+      <!-- <td>{{p.second_user}}</td> -->
+      <td>{{p.amount}}</td>
+      <td ng-if="p.gid=='-1'">No Group</td>
+    </tr>
+  </table>
+</div>

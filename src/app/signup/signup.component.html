@@ -1,0 +1,215 @@
+<!-- <form class="form-horizontal">
+  <fieldset>
+  
+  <!-- Form Name -->
+  <!-- <legend>Form Name</legend> -->
+  
+  <!-- Prepended text-->
+  <!-- <div class="form-group">
+    <label class="col-md-4 control-label" for="prependedtext">Prepended Text</label>
+    <div class="col-md-4">
+      <div class="input-group">
+        <span class="input-group-addon">+91</span>
+        <input id="prependedtext" name="prependedtext" class="form-control" placeholder="Phone No" type="text" required="">
+      </div>
+      <p class="help-block">Enter You Phone No.</p>
+    </div>
+  </div>
+  
+  </fieldset>
+  </form>
+  <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-tint"></span> Default text here</a>  -->
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <!-- Standard Meta -->
+      <meta charset="utf-8"/>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  
+      <!-- Site Properties -->
+      <title>Bootstrap 4 Register Form</title>
+  
+      <!-- Stylesheets -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+  </head>
+  <body>      
+  <div class="container">
+    <form role="form" class="mx-auto text-center app-login-form" (ngSubmit)="onSave()" #f="ngForm">
+                  <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                  <h2>Register New User</h2>
+                  <hr>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="username">UserName</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class=" btn btn-primary input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                          <input type="text" name="username" class="form-control" id="username"
+                                 placeholder="@username" autofocus
+                                 ngModel name="username" required #username="ngModel"
+                          >
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-control-feedback">
+                          <span class="text-danger align-middle">
+                              <!-- Put name validation error messages here -->
+                          </span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="first">First Name</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class=" btn btn-primary input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                        <input type="text" name="first" ngModel class="form-control" id="first"
+                               placeholder="John Doe" required autofocus>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-feedback">
+                        <span class="text-danger align-middle">
+                            <!-- Put name validation error messages here -->
+                        </span>
+                </div>
+            </div>
+        </div>
+          <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="last">Last Name</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class=" btn btn-primary input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                        <input type="text" name="last" ngModel class="form-control" id="last"
+                               placeholder="John Doe" required autofocus
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-feedback">
+                        <span class="text-danger align-middle">
+                            <!-- Put name validation error messages here -->
+                        </span>
+                </div>
+            </div>
+        </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="email">E-Mail Address</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+                          <input type="text" name="email" class="form-control" id="email"
+                                 placeholder="you@example.com" ngModel name="email" required email #email="ngModel" autofocus>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-control-feedback">
+                          <span class="text-danger align-middle">
+                              <!-- Put e-mail validation error messages here -->
+                          </span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="password">Password</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group has-danger">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                          <input type="password" name="password" class="form-control" id="password"
+                                 placeholder="Password"
+                                 ngModel name="password" required #password="ngModel"
+                          >
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div *ngIf="password.touched && password.value.length<8" class="form-control-feedback">
+                        <span class="text-danger align-middle">
+                            <i class="fa fa-close"> Your password should be atleast eight charecters long.</i>
+                        </span>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="password">Confirm Password</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem">
+                              <i class="fa fa-repeat"></i>
+                          </div>
+                          <input type="password" name="password-confirmation" class="form-control"
+                                 id="password-confirm" placeholder="Confirm Password" required
+                                 ngModel name="cpassword" required #cpassword="ngModel"
+                          >
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-control-feedback" *ngIf="password.touched && cpassword.touched && cpassword.value != password.value">
+                        <span class="text-danger align-middle">
+                            <i class="fa fa-close"> Example Error Message</i>
+                        </span>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="phone">Phone No.</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem">
+                            <i class="fa"><b>+91</b></i>
+                        </div>
+                        <input type="text" name="phone" class="form-control"
+                               id="phone" placeholder="7209643581" required
+                               ngModel name="phone" required #phone="ngModel"        
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-feedback">
+                        <span class="text-danger align-middle">
+                            <i class="fa fa-close"> </i>
+                        </span>
+                </div>
+            </div>
+        </div>
+          <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                  <button type="submit" class="btn btn-success"><i class="fa fa-user-plus"></i> Register</button>
+                  <button (click)="Signup()">Click</button>
+              </div>
+          </div>
+      </form>
+  </div>
+  </body>
