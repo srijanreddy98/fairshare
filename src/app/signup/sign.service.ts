@@ -5,6 +5,6 @@ import { Http } from '@angular/http';
 export class SignService {
     constructor(private http: Http) {}
         sendSignUpData(data: any) {
-            return this.http.post('https://fairshare2017.herokuapp.com/authen/adduser/', data);
+            return this.http.post('https://fairshareapp2.herokuapp.com/authen/adduser/', data);
         }
 }

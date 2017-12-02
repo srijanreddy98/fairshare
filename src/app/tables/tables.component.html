@@ -1,0 +1,99 @@
+<mat-progress-spinner class="example-margin" [style.display] = "loading ? 'block' : 'none'" [color]='color' [mode]='mode'>
+</mat-progress-spinner>
+<div class='row'>
+<div class="col-sm-6">
+<div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
+    <div class="example-header">
+      <div class="input-field">
+        <input matInput id="email" type="email" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <label for="email">Filter</label>
+      </div>
+    </div>
+</div>
+</div>
+</div>
+<br>
+<div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
+  <ul style="padding:2%">
+    <li *ngFor="let user of filteredusers; let i = index">
+        <mat-accordion >
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" >
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <!-- <img style="vertical-align:middle" class="circle" aria-hidden src="{{user.flag}}" width="25" height="25"  /> -->
+                    {{user.friend}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    <span class="example-spacer"></span>
+                    dues: &nbsp;
+                   <b> <span [style.color]="user.netamt>=0 ? 'green' : 'red'"> {{user.netamt}}</span></b>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+                <div>
+                    <table class="highlight">
+                      <thead>
+                        <tr>
+                          <th>Description</th>
+                          <th>Amount</th>
+                          <th>Time Added</th>
+                          <th>Date Added</th>
+                        </tr>
+                      </thead>
+                    
+                      <tbody>
+                        <tr *ngFor = "let dat of user.record;let in = index" (click) = showExp([i,in]) >
+                          <td>
+                            {{dat.description}}
+                          </td>
+                          <td>
+                            {{dat.amt}}
+                          </td>
+                          <td>
+                            {{dat.timeCreated | slice:11:19}}
+                          </td>
+                          <td>
+                            {{dat.timeCreated | slice:0:10}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </li>
+      </ul>
+</div>
+<div class="overlay" [style.display]="showingExp ? 'block' : 'none'">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>
+        <a href="#false" data-activates="slide-out" class="button-collapse">
+          <i class="md-36 material-icons md-light">reorder</i>
+        </a>
+      </span>
+      <span style="text-align:center">FairShare</span>
+      <span class="example-spacer"></span>
+      <i class="material-icons" (click)=closeExp()>close</i>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-card class="example-card" >
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title> {{descrip}}  </mat-card-title>
+      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
+        very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+
+

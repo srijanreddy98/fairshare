@@ -1,0 +1,46 @@
+<form class="col-s12" >
+  <div class="row">
+    <div class="input-field col s12">
+    <input id="email" type="email" class="validate" [matAutocomplete]="auto" [formControl]="myControl" [(ngModel)]="username">
+    <label for="email">Username</label>
+  </div>
+</div>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name">
+        <img style="vertical-align:middle" class="circle" aria-hidden src="{{user.flag}}" width="25" height="25"  />
+        <span>{{ user.name }}</span> |
+        <small>Dues: {{user.dues}}</small>
+      </mat-option>
+    </mat-autocomplete>
+    <div class="row">
+        <div class="input-field col s12">
+        <input id="last_name" type="email" name="amount" class="validate" [(ngModel)]="addexpamt" > 
+        <label for="last_name">Amount</label>
+      </div>
+    </div>
+
+    <mat-form-field class="col s12">
+        <mat-select placeholder="Nature Of Transaction" [disabled]="username==='' || addexpamt === '' ? true : false">
+          <mat-option value="">
+              <b>You owe </b> <span style="color:teal" >{{username}}</span> <span style="color:crimson"> {{addexpamt}}</span>
+          </mat-option>
+          <mat-option value="">
+              <span style="color:teal" >{{username}}</span> <b>Owes You</b> <span style="color:crimson"> {{addexpamt}}</span>
+          </mat-option>
+          <mat-option value="">
+              <span style="color:teal" >{{username}}</span> <b>Paid</b> <span style="color:crimson"> {{addexpamt}}</span> <b>and is to be split equally</b>
+          </mat-option>
+          <mat-option value="">
+             <b> You Paid </b> <span style="color:crimson"> {{addexpamt}}</span> <b>and is to be split equally</b>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- <mat-form-field>
+          <input matInput [matDatepicker]="picker1" placeholder="Angular forms" [formControl]="date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field> -->
+      <br>
+    <button mat-raised-button>Submit</button>
+  
+  </form>

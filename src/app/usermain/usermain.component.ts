@@ -3,6 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { saveAs } from 'file-saver';
 declare var jquery: any;
 declare var $: any;
 import { UserService } from './user.service';
@@ -14,16 +15,21 @@ import { UserService } from './user.service';
 
 export class UsermainComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, private _cookieService: CookieService ) { }
+  constructor(private userService: UserService, private router: Router, private _cookieService: CookieService ) {
+  }
   data = '';
+  imageToShow: any;
+  isImageLoading: false;
   @ViewChild('addexp') addExpForm: NgForm;
-  final: any;
+  @ViewChild('editexp') editExpForm: NgForm; // For viewing the contents of the add expense form
+  final: any; // Its is the vairable which gets the all the recordds of a user
   owesMeARR = [];
   IoweThemARR = [];
   currentSelectedNum: number ;
   currentSelected = {
     first_user: '',
     second_user: '',
+    id: '',
     gid: '',
     amount: '',
     description: '',
@@ -34,6 +40,7 @@ export class UsermainComponent implements OnInit {
   {
     first_user: '',
     second_user: '',
+    id: '',
     gid: '',
     amount: '',
     description: '',
@@ -44,6 +51,7 @@ export class UsermainComponent implements OnInit {
   {
     first_user: '',
     second_user: '',
+    id: '',
     gid: '',
     amount: '',
     description: '',
@@ -56,6 +64,7 @@ export class UsermainComponent implements OnInit {
   user = '';
   addEx = false;
   editEx = false;
+  addPhoto = false;
   // Add expense function next
   addExpSet = () => this.addEx = this.addEx ? false : true;
   addExpense() {
@@ -92,7 +101,7 @@ export class UsermainComponent implements OnInit {
       const headers = new Headers({ 'Authorization': this._cookieService.get('token') });
       this.userService.head(this.data, headers).subscribe(
         (response) => {
-          console.log('its working'); console.log(response); this.x = JSON.stringify(response);
+          this.x = JSON.stringify(response);
           const dat = this.x.split(':');
           dat[0] = '{"body"';
           this.x = dat.join(':');
@@ -120,7 +129,6 @@ export class UsermainComponent implements OnInit {
   fun = (data) => {
     this.currentSelectedNum = data;
     this.currentSelected = this.owesMeARR[data];
-    console.log(this.currentSelected);
     if (!this.addEx) {
       this.displayExpense = true;
     }
@@ -129,6 +137,86 @@ export class UsermainComponent implements OnInit {
   editExpSet = () => { this.displayExpense = this.displayExpense ? false : true;
      this.editEx = this.editEx ? false : true; }
   editExpense() {
-    console.log('expense');
+    let amount = '';
+    let description = '';
+    if (this.editExpForm.value.amount !== '') { amount = this.editExpForm.value.amt; }
+    if (this.editExpForm.value.des !== '') { description = this.editExpForm.value.des; }
+    const data = {
+      first_user: this.currentSelected.first_user,
+      second_user: this.currentSelected.second_user,
+      amount: amount,
+      gid: -1,
+      id: this.currentSelected.id,
+      description: description,
+      settled_up: false
+    };
+    if (this.editExpForm.value.typeS === '1' || this.editExpForm.value.typeS === '2') {
+      data.amount = (parseFloat(data.amount) / 2).toString();
+    }
+    if (this.editExpForm.value.typeS === '1' || this.editExpForm.value.typeS === '3') {
+      data.first_user = data.second_user;
+      data.second_user = this._cookieService.get('username');
+    }
+    const headers = new Headers({ 'Authorization': this._cookieService.get('token') });
+    console.log(data);
+    this.userService.editRecord(data, headers).subscribe(
+      (editExpRes) => console.log(editExpRes),
+      (editExpErr) => console.log(editExpErr)
+    );
+  }
+  addPhotoSet = () => {
+    this.addPhoto = this.addPhoto ? false : true;
+  }
+  fileEvent($event) {
+    const fileSelected: File = $event.target.files[0];
+    const headers = new Headers({ 'Authorization': this._cookieService.get('token') });
+    this.userService.uploadFile(fileSelected , headers)
+      .subscribe((sendPhotoResp) => {
+        console.log(sendPhotoResp);
+      },
+      (sendPhotoErr) => {
+        console.log('set any error actions...');
+      });
+  }
+  createImageFromBlob(image: any) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.imageToShow = reader.result;
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+  getImage() {
+    // const headers = new Headers({ 'Authorization': this._cookieService.get('token') });
+    // this.userService.get(headers, this._cookieService.get('username') ).subscribe(
+      // (getImgRes) => { console.log(getImgRes);
+        // console.log('got image');
+        // const a = getImgRes['_body'];
+        // console.log(getImgRes['_body']);
+        // console.log('finished');
+        // const blob = new Blob([getImgRes['_body']], { type: 'image/png' });
+        // const file = new File([blob], 'Anubhav.jpg');
+        // saveAs(blob, 'Anubhav.jpg');
+        // console.log('file printed');
+        // this.createImageFromBlob(URL.createObjectURL(blob));
+        // const objectURL = URL.createObjectURL(blob);
+        // this.imageToShow = objectURL;
+        // console.log(this.imageToShow);
+        // console.log('over');
+        // const b64Response = btoa(getImgRes['_body']);
+
+        // create an image
+        // const outputImg = document.createElement('img');
+        // outputImg.src = 'data:image/png;base64,' + b64Response;
+
+        // append it to your page
+        // document.body.appendChild(outputImg);
+        // this.isImageLoading = false;
+     // },
+      // (getImgErr) => console.log(getImgErr)
+    // );
   }
 }
+// imageToShow: any;

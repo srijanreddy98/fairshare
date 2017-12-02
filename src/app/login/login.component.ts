@@ -14,6 +14,7 @@ import { CookieService } from 'ngx-cookie';
 })
 export class LoginComponent implements OnInit {
   title = 'app';
+  loading = false;
   @ViewChild('f') form: NgForm;
   data = {
     username: 'null',
@@ -26,19 +27,19 @@ export class LoginComponent implements OnInit {
       username: this.form.value.username,
       password: this.form.value.password
     };
-    console.log(this.data);
+    this.loading = true;
     this.serverService.sendSignUpData(this.data).subscribe(
       (re) => {
         this.res = re.text().split(':')[1];
-        this.res = 'JWT ' + this.res.slice(1, -2);
+        this.res = 'Jwt ' + this.res.slice(1, -2);
         console.log(this.res);
         const headers = new Headers({ 'Authorization': this.res });
         this._cookieService.put('token' , this.res);
         this._cookieService.put('username', this.data.username);
-        console.log(this._cookieService.getAll());
-        this.router.navigate(['usermain']);
+        this.loading = false;
+        this.router.navigate(['usermain/screen/individual']);
       },
-    (err) => {console.log(err);  }
+      (err) => { console.log(err); this.loading = false; }
     );
   }
   Signup = () => {

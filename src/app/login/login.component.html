@@ -77,7 +77,7 @@
 
 <body>
   
-
+<mat-progress-bar mode="buffer" [style.display]="loading ? 'block' : 'none'"></mat-progress-bar>
 
 
 <div class="container-fluid container-fill-height">
@@ -106,6 +106,9 @@
       <footer class="screen-login">
         <a href="#" class="text-muted">Forgot password</a>
       </footer>
+      <div class="mb-5">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw" [style.display]="loading ? 'block' : 'none' "></i>
+      </div>
     </form>
   </div>
 </div>

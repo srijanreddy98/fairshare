@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <table class="table table-striped">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Id</th>
+          </tr>
+        </thead>
+        <tr *ngFor = "let group of userGroups; let i =index" (click) = "showGroup(i)">
+          <td>{{group.name}}</td>
+          <td>{{group.g_type}}</td>
+          <td>{{group.id}}</td>
+        </tr>
+      </table>
+    </div>
+  <div class="col-md-4"><div class="card" [style.display] = "showGroupDetail ? 'block' : 'none'" >
+    <img class="card-img-top img-fluid" src="http://twochicago.com/blog/wp-content/uploads/2013/03/paris.jpg" alt="Card image cap">
+    <div class='overlay' [style.display]="loadingGroupDetails ? 'block' : 'none' ">
+      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    </div>
+    <div class="card-block" [style.display]="loadingGroupDetails ? 'none' : 'block' ">
+      <h3 class="card-title">{{ userGroups[selectedGroupIndex].name }}</h3>
+      <p class="card-text">
+        <span *ngFor = "let member of selectedGroup">
+          {{ member }}
+        </span>
+      </p><br>
+      <button class="btn btn-danger" (click) = "deleteGroup()">Delete Group</button>
+    </div>
+  </div></div>
+  </div>
+</div>
