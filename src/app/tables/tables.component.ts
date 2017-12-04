@@ -175,7 +175,7 @@ export class TablesComponent implements OnInit {
     this.selectedExpense = this.userData[i[0]].record[i[1]];
     this.showingExp = true;
   }
-  closeExp(i) {
+  closeExp() {
     this.showingExp = false;
   }
 
