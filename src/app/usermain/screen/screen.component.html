@@ -1,10 +1,10 @@
 <div class="mat-app-background">
-<mat-toolbar color="primary" style="background-color:rgb(170, 12, 91)">
+<mat-toolbar color="primary" style="background-color:rgb(37, 88, 255)">
   <mat-toolbar-row>
     <span><a href="#false" data-activates="slide-out" class="button-collapse">
       <i class="md-36 material-icons md-light">reorder</i>
     </a></span>
-    <span style="text-align:center">FairShare</span>
+    <span style="text-align:center; margin:0 auto;"><h2>FairShare</h2></span>
   </mat-toolbar-row>
 </mat-toolbar>
 <ul id="slide-out" class="side-nav" style="background-color: rgb(40, 41, 41)">
@@ -47,32 +47,7 @@
 
 <!-- <div class="headpos"> <h3>Fare<span style="color:maroon;">S</span>hare</h3></div> -->
 
-<div class="overlay" [style.display]="displayG || displayI ? 'block' : 'none'">
-  <div [@divState]="state">
-    <app-upper-card [style.display]="displayI ? 'block' : 'none'"></app-upper-card>
-    <!-- <app-group-card [style.display]="displayG ? 'block' : 'none'"></app-group-card>  -->
-  </div>
-</div>
-<!-- <a href="#false" data-activates="slide-out" class="button-collapse">
-        <i class="medium material-icons">reorder</i>
-      </a> -->
-<div class="fixed-action-btn horizontal click-to-toggle buttonpos">
-  <a class="btn-floating btn-large red">
-    <i class="large material-icons" (click)="on()">add</i>
-  </a>
-  <ul>
-    <li>
-      <a class="btn-floating red" (click)="onI()">
-        <i class="material-icons">person_add</i>
-      </a>
-    </li>
-    <li>
-      <a class="btn-floating blue" (click)="onG()">
-        <i class="material-icons">group_add</i>
-      </a>
-    </li>
-  </ul>
-</div>
+
 <!-- <nav md-tab-nav-bar>
   <a md-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" routerLinkActive="mat-tab-link-active"
     #rla="routerLinkActive"  (click)="activeLinkIndex = i" [routerLinkActiveOptions]="{exact: true}">

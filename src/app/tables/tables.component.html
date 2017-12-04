@@ -1,4 +1,4 @@
-<mat-progress-spinner class="example-margin" [style.display] = "loading ? 'block' : 'none'" [color]='color' [mode]='mode'>
+<mat-progress-spinner class="example-margin" [style.display] = "loading ? 'block' : 'none'" [color]='color' [mode]='mode' style="margin:0 auto;">
 </mat-progress-spinner>
 <div class='row'>
 <div class="col-sm-6">
@@ -21,12 +21,14 @@
               <mat-expansion-panel-header>
                 <mat-panel-title>
                     <!-- <img style="vertical-align:middle" class="circle" aria-hidden src="{{user.flag}}" width="25" height="25"  /> -->
-                    {{user.friend}}
+                    {{user.friend}}&emsp;
+                    <button class="btn-small btn-outline-success" (click) = addExpense([user.friend,i]) >Add Bill</button>
                 </mat-panel-title>
                 <mat-panel-description>
                     <span class="example-spacer"></span>
                     dues: &nbsp;
-                   <b> <span [style.color]="user.netamt>=0 ? 'green' : 'red'"> {{user.netamt}}</span></b>
+                   <b> <span [style.color]="user.netamt>=0 ? 'green' : 'red'"> {{user.netamt}}</span></b>&emsp;
+                  <button class="btn-small btn-outline-warning">Settle Up!</button>
                 </mat-panel-description>
               </mat-expansion-panel-header>
                 <div>
@@ -64,7 +66,7 @@
       </ul>
 </div>
 <div class="overlay" [style.display]="showingExp ? 'block' : 'none'">
-  <mat-toolbar color="primary">
+  <!-- <mat-toolbar color="primary">
     <mat-toolbar-row>
       <span>
         <a href="#false" data-activates="slide-out" class="button-collapse">
@@ -74,26 +76,74 @@
       <span style="text-align:center">FairShare</span>
       <span class="example-spacer"></span>
       <i class="material-icons" (click)=closeExp()>close</i>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <mat-card class="example-card" >
-    <mat-card-header>
+    </mat-toolbar-row> 
+</mat-toolbar>-->
+
+  <mat-card class="example-card"  style="margin:auto auto;">
+    <!-- <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title> {{descrip}}  </mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
-        very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
-      </p>
-    </mat-card-content>
+    </mat-card-header> -->
+<!--  -->
+
+<mat-card-title style="color:#ffc107">
+<i class="material-icons">attach_money</i>
+
+ {{selectedExpense.description}}&emsp;&emsp;&emsp;&emsp;&emsp;<i class="material-icons" style="margin:0 auto;color:#e65c26" (click)=closeExp()>close</i>
+<br>
+
+
+</mat-card-title>
+
+<mat-card-title>
+<mat-card-content style="color:rgb(2, 121, 250)">
+   Expense added by Leonardo on {{ selectedExpense.timeCreated | slice:0:10}}
+</mat-card-content>
+
+  <mat-form-field class="example-full-width">
+    <textarea matInput placeholder="Leave a comment"></textarea>
+  </mat-form-field>
+  <button class="btn btn-outline-primary">Post Comment</button>
+</mat-card-title>
     <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
+      <button class="btn btn-outline-primary">Edit Expense</button>
+      <button class="btn btn-outline-success">Read Comments</button>
     </mat-card-actions>
   </mat-card>
 </div>
 
+<div class="overlay" [style.display]="displayG || displayI ? 'block' : 'none'">
+  <div [@divState]="state">
+    <app-upper-card [style.display]="displayI ? 'block' : 'none'"></app-upper-card>
+    <!-- <app-group-card [style.display]="displayG ? 'block' : 'none'"></app-group-card>  -->
+  </div>
+</div>
+<!-- <a href="#false" data-activates="slide-out" class="button-collapse">
+        <i class="medium material-icons">reorder</i>
+      </a> -->
+<div class="fixed-action-btn horizontal click-to-toggle buttonpos">
+  <a class="btn-floating btn-large red">
+    <i class="large material-icons" (click)="on()">add</i>
+  </a>
+  <ul>
+    <li>
+      <a class="btn-floating red" (click)="onI()">
+        <i class="material-icons">person_add</i>
+      </a>
+    </li>
+    <li>
+      <a class="btn-floating blue" (click)="onG()">
+        <i class="material-icons">group_add</i>
+      </a>
+    </li>
+  </ul>
+</div>
 
+<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+</mat-paginator>
 
+<div *ngIf="pageEvent">
+  <h5>Page Change Event Properties</h5>
+  <div>List length: {{pageEvent.length}}</div>
+  <div>Page size: {{pageEvent.pageSize}}</div>
+  <div>Page index: {{pageEvent.pageIndex}}</div>
+</div>

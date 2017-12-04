@@ -11,18 +11,22 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatGridListModule } from '@angular/material/grid-list';
 @NgModule({
   imports: [
     MatTabsModule, MatButtonModule, MatAutocompleteModule,
      MatFormFieldModule, MatInputModule, MatSelectModule,
       MatProgressBarModule, MatTableModule, MatExpansionModule,
-    MatToolbarModule, MatCardModule, MatProgressSpinnerModule
+    MatToolbarModule, MatCardModule, MatProgressSpinnerModule,
+    MatPaginatorModule, MatGridListModule
     ],
   exports: [
     MatTabsModule, MatButtonModule, MatAutocompleteModule,
      MatFormFieldModule, MatInputModule, MatSelectModule,
      MatProgressBarModule, MatTableModule, MatExpansionModule,
-    MatToolbarModule, MatCardModule, MatProgressSpinnerModule
+    MatToolbarModule, MatCardModule, MatProgressSpinnerModule,
+    MatPaginatorModule, MatGridListModule
     ],
 
 })

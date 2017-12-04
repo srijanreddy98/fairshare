@@ -45,7 +45,7 @@ export class GroupsComponent implements OnInit {
     this.userService.head(data, headers).subscribe(
       (getDataResponse) => {
         const serverData = JSON.parse(getDataResponse['_body']);
-        for (let i of serverData) {
+        for (const i of serverData) {
           const record = {
             amt: 0,
             gid: -1,
@@ -83,7 +83,7 @@ export class GroupsComponent implements OnInit {
           }
         }
         console.log(this.userData);
-        for (let i of this.userData) {
+        for (const i of this.userData) {
           i.record.sort((a, b) => {
             if (a.id < b.id) {
               return -1;
@@ -111,7 +111,7 @@ export class GroupsComponent implements OnInit {
         }
         this.loadingGroupDetails = false;
       },
-      (groupError) => { console.log(groupError); this.loadingGroupDetails = false;}
+      (groupError) => { console.log(groupError); this.loadingGroupDetails = false; }
     );
   }
   deleteGroup() {
@@ -121,8 +121,7 @@ export class GroupsComponent implements OnInit {
       };
     const headers = new Headers({ 'Authorization': this._cookieService.get('token') });
     this.userService.delGroup(deleteGroupData, headers).subscribe(
-      (response) => {console.log(response); 
-        
+      (response) => {console.log(response);
       },
       (error) => console.log(error)
     );

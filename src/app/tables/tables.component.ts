@@ -1,4 +1,7 @@
-import { Component, OnInit,  ViewEncapsulation, Injectable } from '@angular/core';
+import {
+  Component, OnInit, ViewEncapsulation, Injectable, trigger,
+  state, style, transition, animate } from '@angular/core';
+import { PageEvent } from '@angular/material';
 import {MatTableDataSource} from '@angular/material';
 import { CookieService } from 'ngx-cookie';
 import { Http, Headers } from '@angular/http';
@@ -12,10 +15,26 @@ import { DataSource } from '@angular/cdk/collections';
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.css']
+  styleUrls: ['./tables.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('divState', [
+      state('small', style({
+        // 'width':'0px',
+        // 'height':'0px'
+        'opacity': '0'
+      })),
+      state('big', style({
+        // 'width':'1000px',
+        // 'height':'1000px'
+        'opacity': '1'
+      })),
+      transition('small=>big', animate(1000))
+    ])
+  ]
 })
 export class TablesComponent implements OnInit {
-  color = 'primary';
+  color = 'warn';
   mode = 'indeterminate';
   loading = false;
   showingExp = false;
@@ -27,8 +46,25 @@ export class TablesComponent implements OnInit {
   displayedColumns = ['amt', 'gid', 'id', 'timeCreated', 'lastUpdated', 'description'];
   dataSource = [];
   descrip = 'Hello123';
+  state = 'small';
+  allow = true;
+  display = false;
+  displayI = false;
+  displayG = false;
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions = [5, 10, 25, 100];
+  pageEvent: PageEvent;
+  selectedExpense = {
+    amt: 0,
+    gid: -1,
+    id: -1,
+    timeCreated: '',
+    lastUpdated: '',
+    description: ''
+  };
+  editRecord = false;
   constructor(private _cookieService: CookieService, private userService: UserService, private router: Router) { }
-
 
   panelOpenState = false;
 
@@ -48,8 +84,9 @@ export class TablesComponent implements OnInit {
   ];
   filteredusers = this.userData;
 
-
-
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  }
   ngOnInit() {
     if (this._cookieService.get('username') === '') {
       // this.router.navigate(['login']);
@@ -93,6 +130,10 @@ export class TablesComponent implements OnInit {
               data.netamt = amt;
               data.record.push(record);
               this.userData.push(data);
+              this.users.push({
+                name: data.friend,
+                dues: data.netamt.toString()
+              });
             } else {
               this.userData[index].record.push(record);
             }
@@ -130,8 +171,8 @@ export class TablesComponent implements OnInit {
   }
 
   showExp(i) {
-    console.log(i);
-    this.descrip = this.userData[i[0]].record[i[1]].description;
+    console.log(this.userData[i[0]].record[i[1]]);
+    this.selectedExpense = this.userData[i[0]].record[i[1]];
     this.showingExp = true;
   }
   closeExp(i) {
@@ -148,6 +189,64 @@ export class TablesComponent implements OnInit {
     // this.dataSource.filter = filterValue;
     // this.filteredusers=filterValue;
   }
+  twitch() {
+    this.state = 'big';
+  }
+  on() {
+    this.state = 'small';
+    if (!this.display) {
+      this.display = true;
+      console.log(this.users);
+    } else {
+      this.off();
+    }
+
+    this.displayI = false;
+    this.displayG = false;
+
+  }
+
+  off() {
+    this.state = 'small';
+    this.display = false;
+    this.displayI = false;
+    this.displayG = false;
+  }
+  onI() {
+    this.state = 'small';
+    if (!this.displayI) {
+      this.displayI = true;
+    } else {
+      this.displayI = false;
+    }
+    this.displayG = false;
+    this.twitch();
+  }
+
+  offI() {
+    this.state = 'small';
+    this.displayI = false;
+  }
+  onG() {
+    this.state = 'small';
+    if (!this.displayG) {
+      this.state = 'small';
+      this.displayG = true;
+    } else {
+      this.displayG = false;
+    }
+    this.displayI = false;
+    this.twitch();
+  }
+
+  offG() {
+    this.state = 'small';
+    this.displayG = false;
+  }
+  addExpense(i) {
+    this.on();
+    this.onI();
+  }
 }
 export interface Element {
   description: string;
@@ -157,4 +256,3 @@ export interface Element {
   id: string;
   gid: string;
 }
-
