@@ -1,0 +1,120 @@
+/* Structure */
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: auto;
+  }
+  .example-card {
+    width: 50%;
+    padding-top:20%;
+
+  }
+    .example-card2 {
+      width: 33%;
+      padding-top: 20%;
+      
+    }
+
+  body{
+    font-size: 3.2vw;
+      
+  }
+  .nowrap {
+    white-space: nowrap ;
+  }
+  /* li { 
+    cursor: pointer; 
+  } */
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .lig:hover { 
+    background-color: yellow;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+  /* Structure */
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: auto;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 300px;
+  }
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  .material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .material-icons.md-36 {
+    font-size: 36px;
+  }
+
+.trgreen:hover{
+  background-color: rgb(91, 255, 91);
+  color:rgb(0,0,0);
+}
+.trred:hover{
+  background-color: rgb(235, 90, 90);
+  color:rgb(0,0,0);
+}
+
+  .overlay {
+    position: fixed;
+    /* Sit on top of the page content */
+    /* Hidden by default */
+    width: 100%;
+    /* Full width (cover the whole page) */
+    height: 100%;
+    /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.74);
+    color: wheat;
+    /* Black background with opacity */
+    z-index: 2;
+    /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer;
+    /* Add a pointer on hover */
+  }
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}

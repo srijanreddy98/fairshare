@@ -1,0 +1,20 @@
+.bg-overlay {
+  background: linear-gradient(rgba(143, 11, 143, 0.7), rgba(82, 6, 224, 0.7));
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  color: #fff;
+  height: 450px;
+  padding-top: 50px;
+  text-align: center;
+}
+
+.bg-no-overlay {
+  background: url("https://unsplash.imgix.net/photo-1416339442236-8ceb164046f8?q=75&fm=jpg&s=8eb83df8a744544977722717b1ea4d09");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  color: #fff;
+  height: 450px;
+  padding-top: 0px;
+}

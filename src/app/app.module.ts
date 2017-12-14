@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {Routes, RouterModule} from '@angular/router';
 import { CookieModule } from 'ngx-cookie';
@@ -25,6 +25,14 @@ import { MaterialModule } from './material.module';
 import { UpperCardComponent } from './upper-card/upper-card.component';
 import { TablesComponent } from './tables/tables.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { AddFriendsComponent } from './add-friends/add-friends.component';
+import { ProfileService } from './usermain/profile/profile.service';
+import { GroupService } from './usermain/screen/groups/group.service';
+import { ScrollbarModule } from 'ngx-scrollbar';
+import { FriendlistComponent } from './friendlist/friendlist.component';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+
 
 const appRoutes: Routes = [
   {
@@ -60,6 +68,10 @@ const appRoutes: Routes = [
             component: RecentActionsComponent,
           }
         ]
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
       }
     ]
   }
@@ -79,7 +91,9 @@ const appRoutes: Routes = [
     GroupsComponent,
     UpperCardComponent,
     TablesComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    AddFriendsComponent,
+    FriendlistComponent
   ],
   imports: [
     BrowserModule,
@@ -89,9 +103,12 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes, { useHash: true }),
     CookieModule.forRoot(),
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ScrollbarModule,
+    Ng2GoogleChartsModule,
+    NgxChartsModule
   ],
-  providers: [ServerService, SignService, UserService],
+  providers: [ServerService, SignService, UserService, ProfileService, GroupService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

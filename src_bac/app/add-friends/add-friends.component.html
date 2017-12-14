@@ -1,0 +1,10 @@
+<form (ngSubmit)="onSend()" #f="ngForm">
+  <!-- <h1>Add Friend</h1> -->
+  <div class="input-field col s6">
+  <input type="text" name="friend" [(ngModel)]="friend" class="validate">
+  <label for="friend">Enter the Username</label>
+  </div>
+  <button mat-raised-button type="submit">Send Request<i class="material-icons">add</i></button>
+</form>
+<br>
+<mat-progress-bar mode="indeterminate" *ngIf="loading" style="background-color:blue"></mat-progress-bar>

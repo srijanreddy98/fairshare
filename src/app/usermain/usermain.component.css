@@ -11,7 +11,9 @@
   padding: 5px;
   height: 100%;
 }
-
+img:hover{
+  cursor: pointer;
+}
 .dropdown-user:hover {
   cursor: pointer;
 }

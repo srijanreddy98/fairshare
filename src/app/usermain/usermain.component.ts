@@ -1,21 +1,21 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { saveAs } from 'file-saver';
-declare var jquery: any;
-declare var $: any;
+declare var jQuery: any;
 import { UserService } from './user.service';
 @Component({
   selector: 'app-usermain',
   templateUrl: './usermain.component.html',
-  styleUrls: [ './assets/css/application.css', './usermain.component.css']
+  styleUrls: [ './usermain.component.css']
 })
 
 export class UsermainComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, private _cookieService: CookieService ) {
+  constructor(private el:ElementRef, private userService: UserService, private router: Router, private _cookieService: CookieService ) {
+    this.username = this._cookieService.get('username');
   }
   data = '';
   imageToShow: any;
@@ -65,10 +65,13 @@ export class UsermainComponent implements OnInit {
   addEx = false;
   editEx = false;
   addPhoto = false;
+  username = '';
   // Add expense function next
   addExpSet = () => this.addEx = this.addEx ? false : true;
   addExpense() {
     const headers = new Headers({ 'Authorization': this._cookieService.get('token') });
+
+
     const data = {
       first_user : this._cookieService.get('username'),
       second_user : this.addExpForm.value.secUser,
@@ -94,6 +97,7 @@ export class UsermainComponent implements OnInit {
 
   // OnInit get all records from the existing data present in the cookies
   ngOnInit() {
+    jQuery(this.el.nativeElement).find('.button-collapse').sideNav();
     if (this._cookieService.get('username') === '') {
       // this.router.navigate(['login']);
     }else {
@@ -132,6 +136,13 @@ export class UsermainComponent implements OnInit {
     if (!this.addEx) {
       this.displayExpense = true;
     }
+  }
+  home()
+  {
+    this.router.navigate(['/usermain/screen/individual']);
+  }
+  redToProf(){
+    this.router.navigate(['/usermain/profile']);
   }
   showExpSet = () => this.displayExpense = this.displayExpense ? false : true;
   editExpSet = () => { this.displayExpense = this.displayExpense ? false : true;

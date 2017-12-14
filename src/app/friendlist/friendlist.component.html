@@ -1,0 +1,87 @@
+<div class="example-container mat-elevation-z8" >
+<mat-tab-group style="size:20%">
+  <mat-tab label="Friend List">               
+              <ul class="collection">
+                <!-- <li class="collection-header" style="background-color:rgb(43,43,43);border-color:rgba(26, 25, 25, 0.459)"><h4 style="font-size:20px">Friends</h4>
+                  <hr> -->
+                <li>
+                  <div class="input-field" style="padding-right:5%;padding-left:5%">
+                      <input placeholder="Search" id="first_name" type="text" (keyup)="applyFriendsFilter($event.target.value)">
+                    <!-- <i class="material-icons prefix">search</i> -->
+                    <!-- <input matInput id="email"  placeholder="Filter" type="email" (keyup)="applyFriendsFilter($event.target.value)"> -->
+                  </div>
+                </li>
+                <!-- <div style="font-size:15px">
+                <li class="collection-item" style="background-color:rgb(43,43,43);border-color:rgba(26, 25, 25, 0.459)"><h4>Add Friend</h4></li>
+                </div> -->
+                                                        
+                <div [style.max-height.px]="'300'" style="height:auto" [style.overflow]="'auto'" [style.height.px]="'180'">
+                  <ng-scrollbar>
+                    <li class="collection-item avatar" *ngFor="let friend of filteredfriends">
+                      <img src="assets/images/profile.png" alt="" class="circle">
+                        <div style="font-size:15px">{{friend.friend}}
+                          <!-- <br> -->
+                          <!-- <button mat-raised-button (click)="addrec()">Add Record</button> -->
+
+                          <a class="secondary-content"><i (click)="addrec()" class="material-icons">add_circle_outline</i></a></div>
+                
+                      </li>
+                    </ng-scrollbar>
+                  </div> 
+                  <a class="collection-item" (click)="showAddFriend()"><div style="font-size:15px">Add Friend<a class="secondary-content"><i class="material-icons">person_add</i></a></div></a>
+                  <!-- <a  style="font-size:15px" class="collection-item" >Add Friend <i class="material-icons">person_add</i></a> -->
+              </ul>
+    </mat-tab>
+    <mat-tab label="Requests">
+        <ng-template mat-tab-label>
+            <a class="collection-item"><span class="new badge">{{count}}</span>Requests</a>
+        </ng-template>
+      <ul class="collection with-header" >
+        <div [style.max-height.px]="'300'" style="height:auto" [style.overflow]="'auto'" [style.height.px]="'200'">
+          <ng-scrollbar>
+            <div *ngIf="requestedFriends.length === 0">
+              <li ><p style="font-size:15px">You have no requests.</p>  </li>
+            </div>
+            <div  *ngFor="let friend of requestedFriends">
+            <li class="collection-item avatar">
+                <img src="assets/images/profile.png" alt="" class="circle">
+                <span class="title"> {{friend.friend}}</span>
+                <p>
+                  <br>
+                  <button mat-raised-button (click)="requestAccept(friend.friend)">Accept Request</button>
+                  
+                </p>
+                <a href="#!" class="secondary-content">
+                  <i class="material-icons">cancel</i>
+                </a>
+              </li>
+            </div>
+          </ng-scrollbar>
+        </div>
+      </ul>
+       
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<div class="overlay" [style.display]="rec ? 'block' : 'none'">
+  <div style="position:absolute;top:0;right:2px">
+    <i class="medium material-icons" (click)="closerec()">close</i>
+  </div>
+    <app-upper-card></app-upper-card>
+</div>
+
+<div class="overlay" [style.display]="friendCard ? 'block' : 'none'" style="padding-top:5%">
+  <mat-card class="example-card2" style="margin:auto auto;width:250px">
+    <mat-card-header>
+      <mat-card-title>Add Friends</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+  <app-add-friends></app-add-friends>
+  </mat-card-content>
+  
+  <mat-card-actions>
+    <i class="material-icons" (click)="closeaf()">close</i>
+  </mat-card-actions>
+  </mat-card>
+
+</div>

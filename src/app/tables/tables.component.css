@@ -2,25 +2,52 @@
 .example-container {
     display: flex;
     flex-direction: column;
-    min-width: 100px;
+    min-width: auto;
   }
   .example-card {
-    width: 400px;
-    padding-top:50px;
+    width: 50%;
+    padding-top:20%;
 
   }
-
-
+    .example-card2 {
+      width: 33%;
+      padding-top: 20%;
+      
+    }
+  /* li:hover{
+    background : grey;
+  } */
+  body{
+    font-size: 3.2vw;
+      
+  }
+  .nowrap {
+    white-space: nowrap ;
+  }
+  /* li { 
+    cursor: pointer; 
+  } */
   .example-header {
     min-height: 64px;
     padding: 8px 24px 0;
   }
-  
+  #mydiv {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ }
   .mat-form-field {
     font-size: 14px;
     width: 100%;
   }
-  
+
+  .lig:hover { 
+    background-color: rgba(54, 54, 54, 0.384);
+  }
+  .lip:hover {
+    background-color: rgba(0, 255, 191, 0.384);
+  }
   .mat-table {
     overflow: auto;
     max-height: 500px;
@@ -29,7 +56,7 @@
 .example-container {
     display: flex;
     flex-direction: column;
-    min-width: 300px;
+    min-width: auto;
   }
   
   .example-header {
@@ -61,6 +88,15 @@
     font-size: 36px;
   }
 
+.trgreen:hover{
+  background-color: rgba(35, 192, 35, 0.473);
+  color:rgb(0,0,0);
+}
+.trred:hover{
+  background-color: rgba(155, 34, 34, 0.568);
+  color:rgb(0,0,0);
+}
+
   .overlay {
     position: fixed;
     /* Sit on top of the page content */
@@ -82,3 +118,12 @@
     /* Add a pointer on hover */
   }
 
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}

@@ -3,6 +3,7 @@ import {SignService} from './sign.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
+import {MatSnackBar} from '@angular/material';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -10,6 +11,7 @@ import { CookieService } from 'ngx-cookie';
 })
 export class SignupComponent implements OnInit {
 // title = 'app';
+loading = false;
    @ViewChild('f') form: NgForm;
   data = {
     username: '',
@@ -19,8 +21,15 @@ export class SignupComponent implements OnInit {
     phone_no: '',
     email: ''
   };
-  constructor(private serverService: SignService, private router: Router, private _cookieService: CookieService) { }
+  success = false;
+  constructor(public snackBar: MatSnackBar, private serverService: SignService, private router: Router, private _cookieService: CookieService) { }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   onSave() {
+    this.loading=true;
     this.data = {
       username: this.form.value.username,
       password: this.form.value.password,
@@ -31,8 +40,15 @@ export class SignupComponent implements OnInit {
     };
     console.log(this.form);
     this.serverService.sendSignUpData(this.data).subscribe(
-    (response) => {console.log(response); },
-    (error) => {console.log(error); }
+    (response) => {console.log(response);
+      this.success = true;
+      this.loading=false;
+     },
+    (error) => {
+      console.log(error);
+      this.openSnackBar("Error signing up",'');
+      this.loading=false;
+     }
     );
   }
   Signup = () => {

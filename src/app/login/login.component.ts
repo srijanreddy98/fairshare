@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Http, Headers } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,12 @@ export class LoginComponent implements OnInit {
     password: 'null'
   };
   res= '';
-  constructor(private serverService: ServerService, private router: Router, private _cookieService: CookieService) { }
+  constructor(public snackBar: MatSnackBar, private serverService: ServerService, private router: Router, private _cookieService: CookieService) { }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   onSave() {
     this.data = {
       username: this.form.value.username,
@@ -39,7 +45,9 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         this.router.navigate(['usermain/screen/individual']);
       },
-      (err) => { console.log(err); this.loading = false; }
+      (err) => {
+        this.openSnackBar("Invalid user and/or password",'');
+        console.log(err); this.loading = false; }
     );
   }
   Signup = () => {

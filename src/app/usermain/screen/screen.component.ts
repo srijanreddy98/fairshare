@@ -3,8 +3,10 @@ import {
   state,
   style,
   transition,
-  animate } from '@angular/core';
+  animate,  ElementRef  } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from "ngx-cookie";
+declare var jQuery: any;
 @Component({
   selector: 'app-screen',
   templateUrl: './screen.component.html',
@@ -36,7 +38,7 @@ export class ScreenComponent implements OnInit {
   display = false;
   displayI = false;
   displayG = false;
-  constructor(private router: Router) {
+  constructor(private el:ElementRef, private _cookieservice:CookieService, private router: Router) {
     this.routeLinks = [
       {
         label: 'Records',
@@ -71,7 +73,10 @@ export class ScreenComponent implements OnInit {
     this.displayG = false;
 
   }
-
+  logout(){
+    this._cookieservice.removeAll();
+    this.router.navigate(['/login']);
+  }
   off() {
     this.state = 'small';
     this.display = false;
@@ -111,6 +116,7 @@ export class ScreenComponent implements OnInit {
   }
 
   ngOnInit() {
+     jQuery(this.el.nativeElement).find('.button-collapse').sideNav();
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
     });

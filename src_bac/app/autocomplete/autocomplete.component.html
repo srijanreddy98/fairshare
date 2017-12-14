@@ -1,0 +1,58 @@
+<div *ngIf = "!tryAddExp && !successAddExp && !errorAddExp">
+  <form class="col-s12" role="form" class="example-form" (ngSubmit)="onSave()" #f="ngForm">
+    <div class="row">
+      <div class="input-field col s12">
+      <input id="email" type="email" class="validate" [matAutocomplete]="auto"  name="usernam" [(ngModel)]="username">
+      <label for="email">Username</label>
+    </div>
+    </div>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name">
+          <img style="vertical-align:middle" class="circle" aria-hidden src="{{user.flag}}" width="25" height="25"  />
+          <span>{{ user.name }}</span> |
+          <small>Dues: {{user.dues}}</small>
+        </mat-option>
+      </mat-autocomplete>
+      <div class="row">
+          <div class="input-field col s12">
+          <input id="last_name" type="number" name="amount" class="validate" [(ngModel)]="addexpamt" > 
+          <label for="last_name">Amount</label>
+        </div>
+      </div>
+
+      <mat-form-field class="col s12">
+          <mat-select [(ngModel)]="NOT" name="nature" placeholder="Nature Of Transaction" [disabled]="username==='' || addexpamt === '' ? true : false">
+            <mat-option value="1">
+                <b>You owe </b> <span style="color:teal" >{{username}}</span> <span style="color:crimson"> {{addexpamt}}</span>
+            </mat-option>
+            <mat-option value="2">
+                <span style="color:teal" >{{username}}</span> <b>Owes You</b> <span style="color:crimson"> {{addexpamt}}</span>
+            </mat-option>
+            <mat-option value="3">
+                <span style="color:teal" >{{username}}</span> <b>Paid</b> <span style="color:crimson"> {{addexpamt}}</span> <b>and is to be split equally</b>
+            </mat-option>
+            <mat-option value="4">
+              <b> You Paid </b> <span style="color:crimson"> {{addexpamt}}</span> <b>and is to be split equally</b>
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+        <!-- <mat-form-field hintLabel="Max 100 characters">
+          <input matInput #input maxlength="100" placeholder="Your Comments">
+          <mat-hint align="end">{{input.value?.length || 0}}/100</mat-hint>
+        </mat-form-field> -->
+        
+      <div class="input-field col s12">
+        <textarea id="textarea1" class="materialize-textarea" ngModel name="descrip" data-length="20" maxlength="20" [disabled]="username==='' || addexpamt === ''|| NOT==='' ? true : false"></textarea>
+        <label for="textarea1">Description</label>
+      </div>
+      <button mat-raised-button>Submit</button>
+    </form>
+</div>
+<div *ngIf = "tryAddExp && !successAddExp && !errAddExp"><mat-progress-spinner class="example-margin"  [color]='color' [mode]='mode' style="margin:0 auto;">
+</mat-progress-spinner></div>
+<div *ngIf="!tryAddExp && successAddExp && !errAddExp">
+  Success! <button class="btn btn-info" (click)="return()" >Return</button>
+</div>
+<div *ngIf="!tryAddExp && !successAddExp && errAddExp">
+  Couldn't Add Your Expense <button class="btn btn-info" (click)="return()">Return</button>
+</div>

@@ -18,6 +18,12 @@ body {
   .img-1:hover {
     box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   }
+  #mydiv {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ }
   .cardI {
     
     position: fixed;
@@ -25,9 +31,10 @@ body {
     right: 12%;
     margin-top: -50px;
     margin-left: -100px;
-    background: rgb(54, 53, 53);
+    background: rgb(32, 32, 32);
+
     display: inline-block;
-    height: 350px;
+    height: auto;
     position: center;
     width: 300px;
   }

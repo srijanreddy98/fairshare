@@ -1,119 +1,298 @@
 <mat-progress-spinner class="example-margin" [style.display] = "loading ? 'block' : 'none'" [color]='color' [mode]='mode' style="margin:0 auto;">
 </mat-progress-spinner>
-<div class='row'>
-<div class="col-sm-6">
-<div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
-    <div class="example-header">
-      <div class="input-field">
-        <input matInput id="email" type="email" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        <label for="email">Filter</label>
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-6" style="padding:0% 5% 0% 0%">
+      <div class="overlay" [style.display]="showHist ? 'block' : 'none'">
+          <mat-card class="example-card"  style="margin:auto auto;margin-top:5%;opacity:0.998;padding:2%">
+            <img mat-card-avatar src="assets/images/profile.png" alt="" class="circle">
+            <mat-card-title>{{selectedUser.friend}}</mat-card-title>
+            <mat-progress-bar *ngIf="lulu" mode="indeterminate"></mat-progress-bar>
+            <mat-card-content [style.overflow]="'auto'" [style.height.px]="'200'">
+                <ng-scrollbar>
+                <ul class="collection" >
+                    <li class="collection-item avatar" *ngFor = "let dat of selectedUser.record;let in = index"  [ngClass]="{
+                      trgreen:dat.amt>0,
+                      trred:dat.amt<0
+                  }">
+                  <img src="assets/images/details.png" alt="" class="circle">
+                  
+                      <span class="title">{{dat.amt}}</span>
+                      <p>{{dat.description}}</p>
+                      <div class="secondary-content">
+
+                        <button mat-raised-button (click)="settle(in)">Settle Up<i class="material-icons">receipt</i></button>
+                      </div>
+                      <!-- <a href="#!" class="secondary-content"></a> -->
+                    </li>
+                  </ul>
+                </ng-scrollbar>
+              <!-- <table >
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Time Added</th>
+                    <th>Date Added</th>
+                  </tr>
+                </thead>     
+                <tbody>
+                <tr *ngFor = "let dat of selectedUser.record;let in = index" (click) = showExp(in) [ngClass]="{
+                    trgreen:dat.amt>0,
+                    trred:dat.amt<0
+                }">
+                  <td>
+                    {{dat.description}}
+                  </td>
+                  <td>
+                    {{dat.amt}}
+                  </td>
+                  <td>
+                    {{dat.timeCreated | slice:11:19}}
+                  </td>
+                  <td>
+                    {{dat.timeCreated | slice:0:10}}
+                  </td>
+                </tr>
+              </tbody>
+            </table> -->
+          </mat-card-content>
+          <mat-card-actions><i class="material-icons" style="font-size: 30px " (click)=closeRec()>cancel</i></mat-card-actions>
+        </mat-card>
+      </div>
+  <div *ngIf="userData!=0" style="padding-top:0%">
+    <mat-tab-group>
+      <mat-tab label="User Records">        
+        <div>
+          <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
+            <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
+              <div class="example-header">
+                <div class="input-field">
+                  <input matInput id="email" type="email" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                  <label for="email">Filter</label>
+                </div>
+              </div>
+            </div>
+            <ul class="collection" style="width:auto;" [style.opacity]="showHist?'0.2':'1'">
+              <div style="height:auto" [style.overflow]="'auto'" [style.height.px]="250">
+                <ng-scrollbar>
+                  <li class="collection-item avatar lig" *ngFor="let user of filteredusers; let i = index" >
+                    <img src="assets/images/profile.png" alt="" class="circle">
+                    <span class="title res">{{user.friend}}</span>
+                    <br>
+                    <p class="res" style="font-size:15px;"><br><span class="nowrap">{{user.rec }}</span> <span [style.color]="user.netamt>=0 ? 'green' : 'red'" class="nowrap">{{user.netamt}}</span> </p>
+                    <a href="#!" class="secondary-content"><i class="medium material-icons" (click) = showHistory(i)>view_list</i></a>
+                  </li>
+                  <hr style="display:none">
+                </ng-scrollbar>
+              </div>
+              <a class="collection-item"  (click)="onI()"><div style="font-size:15px">Add Record<a class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div></a>
+            </ul>
+          </div>
+        </div>
+        </mat-tab>
+        <mat-tab label="Charts">
+          <div style="min-height:400px">
+          <button mat-raised-button (click)="chartOn()">User Based Records</button>
+          <button mat-raised-button (click)="lchartOn()">Expenditure Based Records</button>
+          <div *ngIf="chart">
+          <ng-scrollbar>
+              <ngx-charts-advanced-pie-chart
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="single"
+              [gradient]="gradient"
+              (select)="onSelect($event)">
+            </ngx-charts-advanced-pie-chart>
+          </ng-scrollbar>
+          </div>
+          <div *ngIf="lchart">
+          <ng-scrollbar>
+            <ngx-charts-line-chart
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="multi"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [autoScale]="autoScale"
+            (select)="onSelect($event)">
+          </ngx-charts-line-chart>
+          </ng-scrollbar>
+          </div>
+        </div>
+
+            <!-- <google-chart [data]="lineChartData" (chartReady)="ready($event)" (chartError)="error($event)" (chartSelect)="select($event)"></google-chart> -->
+        </mat-tab>
+     </mat-tab-group>
+      </div>
+      <div *ngIf="!userData?.length>0 && !loading">
+        <div style="padding-top:10%">
+          <mat-card>
+            <mat-card-title>There are no Records</mat-card-title>
+            <mat-card-content>
+                There are no records to display.
+                <!-- <app-add-friends></app-add-friends> -->
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button (click)="addExpense(1)">Add New Record</button>
+                <button mat-button (click)="showAddFriend()">Add New Friend</button>
+            </mat-card-actions>
+          </mat-card>
+          </div>
       </div>
     </div>
-</div>
-</div>
-</div>
-<br>
-<div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
-  <ul style="padding:2%">
-    <li *ngFor="let user of filteredusers; let i = index">
-        <mat-accordion >
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" >
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <!-- <img style="vertical-align:middle" class="circle" aria-hidden src="{{user.flag}}" width="25" height="25"  /> -->
-                    {{user.friend}}&emsp;
-                    <button class="btn-small btn-outline-success" (click) = addExpense([user.friend,i]) >Add Bill</button>
-                </mat-panel-title>
-                <mat-panel-description>
-                    <span class="example-spacer"></span>
-                    dues: &nbsp;
-                   <b> <span [style.color]="user.netamt>=0 ? 'green' : 'red'"> {{user.netamt}}</span></b>&emsp;
-                  <button class="btn-small btn-outline-warning">Settle Up!</button>
-                </mat-panel-description>
-              </mat-expansion-panel-header>
-                <div>
-                    <table class="highlight">
-                      <thead>
-                        <tr>
-                          <th>Description</th>
-                          <th>Amount</th>
-                          <th>Time Added</th>
-                          <th>Date Added</th>
-                        </tr>
-                      </thead>
-                    
-                      <tbody>
-                        <tr *ngFor = "let dat of user.record;let in = index" (click) = showExp([i,in]) >
-                          <td>
-                            {{dat.description}}
-                          </td>
-                          <td>
-                            {{dat.amt}}
-                          </td>
-                          <td>
-                            {{dat.timeCreated | slice:11:19}}
-                          </td>
-                          <td>
-                            {{dat.timeCreated | slice:0:10}}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+    <div class="col-lg-4" style="padding-top:5%;padding-left:0%" [style.display]="loading ? 'none' : 'block'">
+        
+                <app-friendlist></app-friendlist>
+        
+                <!-- <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">               
+                    <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'" style="background-color:rgb(43,43,43)">
+                        <div class="example-header">
+                          <div class="input-field">
+                            <input matInput id="email" style="color:white" type="email" (keyup)="applyFriendsFilter($event.target.value)" placeholder="Filter">
+                            <label for="email">Filter</label>
+                          </div>
+                        </div>
+                      </div>
+        
+        
+                  <div [style.overflow]="'auto'"> 
+                        <ul class="collection with-header" style="background-color:rgb(43,43,43);border-color:rgb(43,43,43);color:white">
+                            <li class="collection-header" style="background-color:rgb(43,43,43);border-color:rgba(26, 25, 25, 0.459)"><h4 style="font-size:20px">Friends</h4></li>
+                                        
+                            <div [style.max-height.px]="'300'" style="height:auto" [style.overflow]="'auto'" [style.height.px]="'200'">
+                              <ng-scrollbar>
+                            <li class="collection-item" *ngFor="let friend of filteredfriends" style="background-color:rgb(43,43,43);border-color:rgba(26, 25, 25, 0.459)">
+                              <div style="font-size:15px">{{friend.friend}}<a href="#!" class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div>
+                            </li>
+                            <hr style="display:none">
+                            </ng-scrollbar>
+                          </div> 
+                        </ul>
                 </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </li>
-      </ul>
-</div>
-<div class="overlay" [style.display]="showingExp ? 'block' : 'none'">
-  <!-- <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <span>
-        <a href="#false" data-activates="slide-out" class="button-collapse">
-          <i class="md-36 material-icons md-light">reorder</i>
-        </a>
-      </span>
-      <span style="text-align:center">FairShare</span>
-      <span class="example-spacer"></span>
-      <i class="material-icons" (click)=closeExp()>close</i>
-    </mat-toolbar-row> 
-</mat-toolbar>-->
+                </div> -->
+            </div>
+  </div>
+  <!-- <div class="overlay" [style.display]="friendCard ? 'block' : 'none'" style="padding-top:5%">
 
-  <mat-card class="example-card"  style="margin:auto auto;">
+    <app-upper-card></app-upper-card>
+      <mat-card class="example-card2" style="margin:auto auto;background-color:rgb(43,43,43);">
+          <mat-card-header>
+              <img mat-card-avatar src="assets/images/addfriend.png">
+              <mat-card-title>Add Friends</mat-card-title>
+            </mat-card-header>
+        <app-add-friends></app-add-friends>
+        <mat-card-actions><i class="material-icons" (click)="closeaf()">close</i></mat-card-actions>
+        </mat-card>
+  </div> -->
+
+
+
+<div class="overlay" [style.display]="showingExp ? 'block' : 'none'">
+  <mat-card class="example-card2" style="margin:auto auto;">
     <!-- <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
     </mat-card-header> -->
-<!--  -->
+    <!--  -->
+    <mat-card-title style="color:#ffc107">
+      <i class="material-icons">attach_money</i>
 
-<mat-card-title style="color:#ffc107">
-<i class="material-icons">attach_money</i>
+      {{selectedExpense.description}}&emsp;&emsp;&emsp;&emsp;&emsp;
+      <i class="material-icons" style="margin:0 auto;color:#e65c26"
+        (click)=closeExp()>close</i>
+      <br>
 
- {{selectedExpense.description}}&emsp;&emsp;&emsp;&emsp;&emsp;<i class="material-icons" style="margin:0 auto;color:#e65c26" (click)=closeExp()>close</i>
-<br>
 
+    </mat-card-title>
 
-</mat-card-title>
+    <mat-card-title>
+      <mat-card-content style="color:rgb(2, 121, 250)">
+        Expense added by Leonardo on {{ selectedExpense.timeCreated | slice:0:10}}
+      </mat-card-content>
 
-<mat-card-title>
-<mat-card-content style="color:rgb(2, 121, 250)">
-   Expense added by Leonardo on {{ selectedExpense.timeCreated | slice:0:10}}
-</mat-card-content>
-
-  <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Leave a comment"></textarea>
-  </mat-form-field>
-  <button class="btn btn-outline-primary">Post Comment</button>
-</mat-card-title>
-    <mat-card-actions>
-      <button class="btn btn-outline-primary">Edit Expense</button>
+      <mat-form-field class="example-full-width" style="margin:auto auto;margin-top:5%">
+        <textarea matInput placeholder="Leave a comment"></textarea>
+      </mat-form-field>
+      <button class="btn btn-outline-primary">Post Comment</button>
+    </mat-card-title>
+    <mat-card-actions style="margin: 0 auto">
+      <button class="btn btn-outline-primary" (click)="editExpense()" >Edit Expense</button>
       <button class="btn btn-outline-success">Read Comments</button>
+      <button class="btn btn-outline-danger">Delete</button>
     </mat-card-actions>
   </mat-card>
 </div>
 
+
+
+<div class="overlay" [style.display]="editExp ? 'block' : 'none'">
+  <mat-card class="example-card2" style="margin:auto auto;">
+  <div class="example-spacer"><i class="material-icons" style="margin:0 auto;color:#e65c26" (click)=editExpense()>close</i></div>
+  <form class="col-s12" role="form" class="example-form" (ngSubmit)="onSave()" #f="ngForm">
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="email" type="email" class="validate" name="usernam" [(ngModel)]="username"  value="{{selectedUser.friend}}" [disabled]="true">
+        <label for="email"></label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="last_name" type="number" name="amount" class="validate" [(ngModel)]="addexpamt" placeholder="{{selectedExpense.amt}}">
+        <label for="last_name">Amount</label>
+      </div>
+    </div>
+    <mat-form-field class="col s12">
+      <mat-select [(ngModel)]="NOT" name="nature" placeholder="Nature Of Transaction" [disabled]="addexpamt === '' ? true : false">
+        <mat-option value="1">
+          <b>You owe </b>
+          <span style="color:teal">{{selectedUser.friend}}</span>
+          <span style="color:crimson"> {{addexpamt}}</span>
+        </mat-option>
+        <mat-option value="2">
+          <span style="color:teal">{{selectedUser.friend}}</span>
+          <b>Owes You</b>
+          <span style="color:crimson"> {{addexpamt}}</span>
+        </mat-option>
+        <mat-option value="3">
+          <span style="color:teal">{{selectedUser.friend}}</span>
+          <b>Paid</b>
+          <span style="color:crimson"> {{addexpamt}}</span>
+          <b>and is to be split equally</b>
+        </mat-option>
+        <mat-option value="4">
+          <b> You Paid </b>
+          <span style="color:crimson"> {{addexpamt}}</span>
+          <b>and is to be split equally</b>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="input-field col s12">
+      <textarea id="textarea1" class="materialize-textarea" ngModel name="descrip" data-length="20" maxlength="20" placeholder="{{selectedExpense.description}}" [disabled]="username==='' || addexpamt === ''|| NOT==='' ? true : false"></textarea>
+      <label for="textarea1">Description</label>
+    </div>
+    <button mat-raised-button>Submit</button>
+  </form>
+  </mat-card>
+</div>
+
+
+
+
+
+
 <div class="overlay" [style.display]="displayG || displayI ? 'block' : 'none'">
+    <div style="position:absolute;top:5px;right:20px">
+        <i class="medium material-icons" (click)="closerec()" style="color:black">close</i>
+      </div>
   <div [@divState]="state">
-    <app-upper-card [style.display]="displayI ? 'block' : 'none'"></app-upper-card>
+
+    <app-upper-card *ngIf="displayI"></app-upper-card>
     <!-- <app-group-card [style.display]="displayG ? 'block' : 'none'"></app-group-card>  -->
   </div>
 </div>
@@ -136,14 +315,4 @@
       </a>
     </li>
   </ul>
-</div>
-
-<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
-</mat-paginator>
-
-<div *ngIf="pageEvent">
-  <h5>Page Change Event Properties</h5>
-  <div>List length: {{pageEvent.length}}</div>
-  <div>Page size: {{pageEvent.pageSize}}</div>
-  <div>Page index: {{pageEvent.pageIndex}}</div>
 </div>

@@ -65,11 +65,11 @@
     <style>
       /* note: this is a hack for ios iframe for bootstrap themes shopify page */
       /* this chunk of css is not part of the toolkit :) */
-      body {
+      /* body {
         width: 1px;
         min-width: 100%;
         *width: 100%;
-      }
+      } */
     </style>
 
   </head>
@@ -80,38 +80,99 @@
 <mat-progress-bar mode="buffer" [style.display]="loading ? 'block' : 'none'"></mat-progress-bar>
 
 
-<div class="container-fluid container-fill-height">
-  <div class="container-content-middle">
-    <form role="form" class="mx-auto text-center app-login-form" (ngSubmit)="onSave()" #f="ngForm">
+<!-- <div class="row">
+    <div class="col sm-6">
+      <div class="card small">
+        <div class="card-content white-text">
+          <span class="card-title">Card Title</span>
+          <p>I am a very simple card. I am good at containing small bits of information.
+          I am convenient because I require little markup to use effectively.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  </div> -->
 
-      <a href="../index.html" class="app-brand mb-5">
-        <img src="assets/img/brand.png" alt="brand">
-      </a><br>
-      <div class="app-brand">
-        <h3 style="font-style: italic; color:rgb(48, 151, 209)">FairShare</h3>
-      </div>
-      <div class="form-group">
-        <input class="form-control" placeholder="Username" required autofocus ngModel name="username">
-      </div>
 
-      <div class="form-group mb-3">
-        <input type="password" class="form-control" placeholder="Password" required ngModel name="password">
-      </div>
+  <!-- <a href="../index.html" class="app-brand mb-5">
+    <img src="assets/img/brand.png" alt="brand">
+  </a><br>
+  <div class="app-brand">
+    <h3 style="font-style: italic; color:rgb(48, 151, 209)">FairShare</h3>
+  </div> -->
 
-      <div class="mb-5">
-        <button class="btn btn-primary" type="submit">Log In</button>
-        <button class="btn btn-secondary" (click) = "Signup()">Sign up</button>
-      </div>
+  <mat-toolbar color="primary">
+  <mat-toolbar-row>
+      <span>Fare Share</span>
+      <span class="example-spacer"></span>
+      <!-- <mat-icon class="example-icon">favorite</mat-icon>
+      <mat-icon class="example-icon">delete</mat-icon> -->
+    </mat-toolbar-row>
+  </mat-toolbar>
+<br>
 
-      <footer class="screen-login">
-        <a href="#" class="text-muted">Forgot password</a>
-      </footer>
-      <div class="mb-5">
-        <i class="fa fa-spinner fa-pulse fa-3x fa-fw" [style.display]="loading ? 'block' : 'none' "></i>
+  <div style="width:400px; margin:0 auto;">
+  <div class="row">
+      <div class="col s12 m6">
+        <div class="card">
+          <div class="card-content white-text">
+            <span class="card-title">Log-In</span>
+            <form role="form" class="example-form" (ngSubmit)="onSave()" #f="ngForm" style="color:black">
+                
+                      <div class="row">
+                      <div class="input-field col s6">
+                          <input id="last_name" type="text" class="validate" required autofocus ngModel  name="username"> 
+                          <label class="active" for="last_name">Username</label>
+                        </div>
+                      </div> 
+                      
+
+                      <!-- <div class="form-group">
+                        <input class="form-control" placeholder="Username" required autofocus ngModel name="username">
+                      </div> -->
+                
+                      <!-- <div class="form-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password" required ngModel name="password">
+                      </div> -->
+                      
+      
+                      <div class="row">
+                      <div class="input-field col s12">
+                          <input id="password" type="password" class="validate" required ngModel name="password">
+                          <label class="active" for="password">Password</label>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="loading">
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                      <br>   
+                    </div>                   
+                      <div class="button-row">
+                        <!-- <button class="btn btn-primary" type="submit">Log In</button> -->
+                        <button mat-raised-button color="primary" type="submit" style="height:30px;width:80px">Log In</button>
+                       
+                        <!-- <button class="btn btn-secondary" (click) = "Signup()">Sign up</button> -->
+                      </div>
+                <br>
+                      <footer class="screen-login">
+                        <a href="#" class="text-muted">Forgot password</a>
+                      </footer>
+                    </form>
+          </div>
+          <hr>
+          <ul class="collection" style="border-color:white">
+           <a style="border-color:white" class="collection-item" href="/#/signup"  (click) = "Signup()">Sign-Up</a>
+           </ul>
+          <!-- <div class="card-action">
+            <a href="/#/signup"  (click) = "Signup()">Sign-Up</a>
+          </div> -->
+        </div>
       </div>
-    </form>
+    </div>
   </div>
-</div>
+ 
 
 
     <!-- <script src="../assets/js/jquery.min.js"></script>    

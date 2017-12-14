@@ -12,7 +12,7 @@ export class UserService {
     head(data: any, headers: any) {
         console.log('hey');
         console.log(headers);
-        return this.http.get(this.url + 'records/recordhistorylist/' + '?username=' + data, { headers: headers });
+        return this.http.get(this.url + 'records/recordhistoryfulldatalist/' + '?username=' + data, { headers: headers });
     }
     addRecord(data: any, headers: any) {
         return this.http.post(this.url + 'records/recordhistorylist/', data, { headers: headers });
@@ -44,5 +44,14 @@ export class UserService {
     }
     getGroupMembers(data: any, headers: any) {
         return this.http.get('https://fairshareapp2.herokuapp.com/groups/groupmemberlist/' + '?gid=' + data, { headers: headers });
+    }
+    getFriendList(data: any, headers: any) {
+        return this.http.get('https://fairshareapp2.herokuapp.com/friend/friendlist/' + '?username=' + data, {headers: headers});
+    }
+    addFriend(data: any, headers: any) {
+        return this.http.post(this.url + 'friend/friendlist/', data, { headers: headers } );
+    }
+    acceptRequest(data: any, headers: any) {
+        return this.http.put(this.url + 'friend/friendlist/', data, { headers: headers} );
     }
 }

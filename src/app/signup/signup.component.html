@@ -21,195 +21,178 @@
   <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-tint"></span> Default text here</a>  -->
   <!DOCTYPE html>
   <html lang="en">
-  <head>
-      <!-- Standard Meta -->
-      <meta charset="utf-8"/>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="keywords" content="">
+      <meta name="author" content="">
   
-      <!-- Site Properties -->
-      <title>Bootstrap 4 Register Form</title>
+      <title>
+        
+          Sign Up &middot; 
+        
+      </title>
   
-      <!-- Stylesheets -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-  </head>
-  <body>      
-  <div class="container">
-    <form role="form" class="mx-auto text-center app-login-form" (ngSubmit)="onSave()" #f="ngForm">
-                  <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-6">
-                  <h2>Register New User</h2>
-                  <hr>
-              </div>
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+  
+      <style>
+        /* note: this is a hack for ios iframe for bootstrap themes shopify page */
+        /* this chunk of css is not part of the toolkit :) */
+        /* body {
+          width: 1px;
+          min-width: 100%;
+          *width: 100%;
+        } */
+      </style>
+  
+    </head>
+<mat-progress-bar mode="buffer" [style.display]="loading ? 'block' : 'none'"></mat-progress-bar>
+  
+  
+  <!-- <div class="row">
+      <div class="col sm-6">
+        <div class="card small">
+          <div class="card-content white-text">
+            <span class="card-title">Card Title</span>
+            <p>I am a very simple card. I am good at containing small bits of information.
+            I am convenient because I require little markup to use effectively.</p>
           </div>
-          <div class="row">
-              <div class="col-md-3 field-label-responsive">
-                  <label for="username">UserName</label>
-              </div>
-              <div class="col-md-6">
-                  <div class="form-group">
-                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                          <div class=" btn btn-primary input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                          <input type="text" name="username" class="form-control" id="username"
-                                 placeholder="@username" autofocus
-                                 ngModel name="username" required #username="ngModel"
-                          >
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-3">
-                  <div class="form-control-feedback">
-                          <span class="text-danger align-middle">
-                              <!-- Put name validation error messages here -->
-                          </span>
-                  </div>
-              </div>
+          <div class="card-action">
+            <a href="#">This is a link</a>
+            <a href="#">This is a link</a>
           </div>
-          <div class="row">
-            <div class="col-md-3 field-label-responsive">
-                <label for="first">First Name</label>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class=" btn btn-primary input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <input type="text" name="first" ngModel class="form-control" id="first"
-                               placeholder="John Doe" required autofocus>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-                            <!-- Put name validation error messages here -->
-                        </span>
-                </div>
-            </div>
         </div>
-          <div class="row">
-            <div class="col-md-3 field-label-responsive">
-                <label for="last">Last Name</label>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class=" btn btn-primary input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <input type="text" name="last" ngModel class="form-control" id="last"
-                               placeholder="John Doe" required autofocus
-                        >
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-                            <!-- Put name validation error messages here -->
-                        </span>
-                </div>
-            </div>
-        </div>
-          <div class="row">
-              <div class="col-md-3 field-label-responsive">
-                  <label for="email">E-Mail Address</label>
-              </div>
-              <div class="col-md-6">
-                  <div class="form-group">
-                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                          <input type="text" name="email" class="form-control" id="email"
-                                 placeholder="you@example.com" ngModel name="email" required email #email="ngModel" autofocus>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-3">
-                  <div class="form-control-feedback">
-                          <span class="text-danger align-middle">
-                              <!-- Put e-mail validation error messages here -->
-                          </span>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-md-3 field-label-responsive">
-                  <label for="password">Password</label>
-              </div>
-              <div class="col-md-6">
-                  <div class="form-group has-danger">
-                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-                          <input type="password" name="password" class="form-control" id="password"
-                                 placeholder="Password"
-                                 ngModel name="password" required #password="ngModel"
-                          >
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-3">
-                <div *ngIf="password.touched && password.value.length<8" class="form-control-feedback">
-                        <span class="text-danger align-middle">
-                            <i class="fa fa-close"> Your password should be atleast eight charecters long.</i>
-                        </span>
-                </div>
-            </div>
-          </div>
-          <div class="row">
-              <div class="col-md-3 field-label-responsive">
-                  <label for="password">Confirm Password</label>
-              </div>
-              <div class="col-md-6">
-                  <div class="form-group">
-                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                          <div class="input-group-addon" style="width: 2.6rem">
-                              <i class="fa fa-repeat"></i>
-                          </div>
-                          <input type="password" name="password-confirmation" class="form-control"
-                                 id="password-confirm" placeholder="Confirm Password" required
-                                 ngModel name="cpassword" required #cpassword="ngModel"
-                          >
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-control-feedback" *ngIf="password.touched && cpassword.touched && cpassword.value != password.value">
-                        <span class="text-danger align-middle">
-                            <i class="fa fa-close"> Example Error Message</i>
-                        </span>
-                </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3 field-label-responsive">
-                <label for="phone">Phone No.</label>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem">
-                            <i class="fa"><b>+91</b></i>
+      </div>
+    </div> -->
+  
+  
+    <!-- <a href="../index.html" class="app-brand mb-5">
+      <img src="assets/img/brand.png" alt="brand">
+    </a><br>
+    <div class="app-brand">
+      <h3 style="font-style: italic; color:rgb(48, 151, 209)">FairShare</h3>
+    </div> -->
+  
+    <mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Fare Share</span>
+        <span class="example-spacer"></span>
+        <!-- <mat-icon class="example-icon">favorite</mat-icon>
+        <mat-icon class="example-icon">delete</mat-icon> -->
+      </mat-toolbar-row>
+    </mat-toolbar>
+  <br>     
+<div *ngIf="!success">
+  <div style="width:500px; margin:0 auto;">
+        <div class="row">
+            <div class="col s12 m6">
+              <div class="card" style="background-color:rgb(36, 36, 36)">
+                <div class="card-content white-text">
+                  <span class="card-title"><h1>Sign Up</h1></span>
+                  <form role="form" class="example-form" (ngSubmit)="onSave()" #f="ngForm">
+                        <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="last_name" type="text" class="validate" required ngModel  name="username" required #username="ngModel"> 
+                                    <label class="active" for="last_name">Enter Your Unique Username</label>
+                                  </div>
                         </div>
-                        <input type="text" name="phone" class="form-control"
-                               id="phone" placeholder="7209643581" required
-                               ngModel name="phone" required #phone="ngModel"        
-                        >
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-                            <i class="fa fa-close"> </i>
-                        </span>
+                        <div class="row">
+                                  <div class="input-field col s6">
+                                        <input id="last_name" type="text" class="validate" required ngModel  name="first" required> 
+                                        <label class="active" for="last_name" required>First Name</label>
+                                    </div>
+                        </div>
+                        <div class="row">
+                                    <div class="input-field col s6">
+                                            <input id="last_name" type="text" class="validate" required ngModel  name="last" required> 
+                                            <label class="active" for="last_name" required>Last Name</label>
+                                        </div>
+                        </div>
+                        <div class="row">
+                                <div class="input-field col s6">
+                                        <input id="email" type="email" class="validate" required ngModel  name="email" required #email="ngModel"> 
+                                        <label class="active" placeholder="you@example.com" for="last_name" required>Enter Your Email</label>
+                                </div>
+                        </div>
+                        <div class="row">
+                                    <div class="input-field col s12">
+                                                <input id="password" type="password" class="validate" required ngModel name="password" #password="ngModel">
+                                                <label class="active" for="password">Password</label>
+                                    </div>
+                                    <br>
+                                    <div>
+                                            <div *ngIf="password.touched && password.value.length<8" class="form-control-feedback">
+                                                    <span class="text-danger align-middle" style="font-size:10px">
+                                                        <i class="fa fa-close"> Your password should be atleast eight charecters long.</i>
+                                                    </span>
+                                            </div>
+                                    </div>
+                        </div>
+                       
+
+
+
+
+                <div class="row">
+                        <div class="input-field col s12">
+                                    <input id="password" type="password" class="validate" required ngModel name="password-conformation" #cpassword="ngModel">
+                                    <label class="active" for="password">Confirm Password</label>
+                        </div>
+                        <br>
+                        <div>
+                                <div *ngIf="password.touched && password.value.length<8 && cpassword.value != password.value" class="form-control-feedback">
+                                        <span class="text-danger align-middle" style="font-size:10px">
+                                            <i class="fa fa-close">Passwords do not match</i>
+                                        </span>
+                                </div>
+                        </div>
+
+                </div> 
+                        <div class="row">
+                                <div class="input-field col s12">
+                                <input type="text" name="phone" class="form-control" id="phone" placeholder="7209643581" required ngModel name="phone" required #phone="ngModel">
+                                <label class="active" for="phone">Phone Number</label>
+                                </div>
+                        </div>
+                        <div *ngIf="loading">
+                          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                          <br>
+                        </div>
+                        <button mat-raised-button>Sign Up</button>
+                        <br>
+                        <br>
+                        <div class="card-action">
+                                <a [routerLink] = "['/login']">Return to Login</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-          <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-6">
-                  <button type="submit" class="btn btn-success"><i class="fa fa-user-plus"></i> Register</button>
-                  <button (click)="Signup()">Click</button>
-              </div>
-          </div>
-      </form>
-  </div>
-  </body>
+    </div>
+    </div>
+</div>
+<div *ngIf="success">
+        <div style="width:500px; margin:0 auto;">
+                <div class="row">
+                    <div class="col s12 m6">
+                      <div class="card" style="background-color:rgb(36, 36, 36)">
+                        <div class="card-content white-text">
+                          <span class="card-title"><h1>Success!</h1></span>
+                          <div class="card-content">
+                                <p>You have successfully signed up! Go to your email and verify your account.</p>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                                <a [routerLink] = "['/login']">Return to Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+
+
+  

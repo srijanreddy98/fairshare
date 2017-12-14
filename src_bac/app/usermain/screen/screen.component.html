@@ -1,0 +1,79 @@
+<div class="mat-app-background">
+<mat-toolbar color="primary" style="background-color:rgb(37, 88, 255)">
+  <mat-toolbar-row>
+    <span><a href="#false" data-activates="slide-out" class="button-collapse">
+      <i class="md-36 material-icons md-light">reorder</i>
+    </a></span>
+    <span style="text-align:center; margin:0 auto;"><h2>FairShare</h2></span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<ul id="slide-out" class="side-nav" style="background-color: rgb(40, 41, 41)">
+  <li style="background-color: rgb(107, 24, 65)">
+    <div class="user-view">
+      <div class="background">
+        <img src="assets/images/img2.png">
+      </div>
+      <a href="#login">
+        <img class="circle" src="assets/images/img.jpg">
+      </a>
+      <a href="#!name">
+        <span class="white-text name">{{username}}</span>
+      </a>
+      <a href="#!email">
+        <span class="white-text email">sahajGandu@gmail.com</span>
+      </a>
+    </div>
+  </li>
+  <li>
+    <a href="#!">
+      <i class="material-icons">group_add</i>Add Friends</a>
+  </li>
+  <li>
+    <a href="#!">
+      <i class="material-icons md-light">view_module</i><span class="mkwhite">Activity</span></a>
+  </li>
+  <li>
+    <!-- <div class="divider" style="color:black"></div> -->
+  </li>
+  <li>
+    <a class="subheader">Account Settings</a>
+  </li>
+  <li>
+    <a class="waves-effect" href="#!">
+      <i class="material-icons md-light">power_settings_new</i>Log-Out</a>
+  </li>
+</ul>
+
+
+<!-- <div class="headpos"> <h3>Fare<span style="color:maroon;">S</span>hare</h3></div> -->
+
+
+<!-- <nav md-tab-nav-bar>
+  <a md-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" routerLinkActive="mat-tab-link-active"
+    #rla="routerLinkActive"  (click)="activeLinkIndex = i" [routerLinkActiveOptions]="{exact: true}">
+    {{routeLink.label}}
+  </a>
+</nav> -->
+
+<!-- <a class="btn-floating btn-large waves-effect waves-light red buttonpos" (click)="on()"><i class="material-icons">add</i></a> -->
+<div style="display:block">
+
+<router-outlet></router-outlet>
+</div>
+</div>
+<div class="clear"></div>
+<footer>
+    <nav class="navbar fixed-bottom" mat-tab-nav-bar style=" background-color:#1f1f1f;height:auto">
+      <span style="margin:0 auto;">
+        <a mat-tab-link [routerLink]="['/usermain','screen','individual']" routerLinkActive = "activeTab" class="inActiveTab">
+          Individual
+        </a>
+        <a mat-tab-link [routerLink]="['/usermain','screen','group']" routerLinkActive = "activeTab" class="inActiveTab">
+          Groups
+        </a>
+        <a mat-tab-link [routerLink]="['/usermain','screen','recent']" routerLinkActive = "activeTab" class="inActiveTab">
+          Recent Actions
+        </a>
+      </span>
+    </nav>
+</footer>

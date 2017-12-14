@@ -1,0 +1,7 @@
+.overlay {
+  color: rgb(235, 168, 45);
+  /* Black background with opacity */
+  /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer;
+  /* Add a pointer on hover */
+}

@@ -1,3 +1,49 @@
-<p>
-  profile works!
-</p>
+
+<mat-progress-spinner class="example-margin" [style.display]="gettingData ? 'block' : 'none'" [color]='color' [mode]='mode' style="margin:0 auto;">
+</mat-progress-spinner>
+<div class="container" [style.display] = "!gettingData ? 'block' : 'none'" >
+    <div class="row">
+        <div class="col-md-2">
+            <img src="/assets/images/profile.png" style="width:100px" alt="" class="circle">
+        </div>
+        <div class="col-md-6">
+            <h1 style="text-shadow: 0 0 5px rgb(0, 255, 136);color:white;margin-top:25px">{{userDetails.firstName}} {{userDetails.lastName}}</h1>
+        </div>
+    </div>
+    <hr style="background-color:white">
+    <div style="background-color:rgb(70,70,70)">
+    <div class="row" style="color:white">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">First Name:</div>
+        <div class="col-md-3">{{userDetails.firstName}}</div>
+    </div>
+    <div class="row" style="color:white">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">Last Name:</div>
+        <div class="col-md-3">{{userDetails.lastName}}</div>
+    </div>
+    <div class="row" style="color:white">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">Username</div>
+        <div class="col-md-3">{{userDetails.username}}</div>
+    </div>
+    <div class="row" style="color:white">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">Email:</div>
+        <div class="col-md-3">{{userDetails.email}}</div>
+    </div>
+    <div class="row" style="color:white">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">PhoneNo:</div>
+        <div class="col-md-3">{{userDetails.phoneNo}}</div>
+    </div>
+    <div class="row" style="color:white">
+        <div class="col-md-2">Pending Requests</div>
+        <div class="col-md-2">{{pendingReq}}</div>
+        <div class="col-md-2">Total Freinds:</div>
+        <div class="col-md-2"> {{totalFriends}} </div>
+        <div class="col-md-2">Requests Sent:</div>
+        <div class="col-md-2"> {{totalFriends}} </div>
+    </div>
+    </div>
+</div>

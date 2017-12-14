@@ -1,0 +1,191 @@
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form (ngSubmit)="onSave()" #f="ngForm">
+        <div id="user-data">
+          <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" ngModel name="username" required #username="ngModel">
+                <span class="help-block" *ngIf="username.touched && username.value.length<8">Your Password should be atleast eigth charecters long</span>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" ngModel name="password" required #password="ngModel">
+            <span class="help-block" *ngIf="password.touched && password.value.length<8">Your Password should be atleast eigth charecters long</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Login</button>
+      </form>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="container">
+  <div class="card card-container">
+      <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+      <p id="profile-name" class="profile-name-card"></p>
+      <form class="form-signin" (ngSubmit)="onSave()" #f="ngForm">
+          <span id="reauth-email" class="reauth-email"></span>
+          <input type="email" id="inputEmail" class="form-control" placeholder="Email or Username" required autofocus ngModel name="username">
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required ngModel name="password">
+          <div id="remember" class="checkbox">
+              <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+              </label>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+      </form>
+      <a href="#" class="forgot-password">
+          Forgot the password?
+      </a>
+  </div>
+</div>
+<button (click)="Signup()">ClickME</button> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>
+      
+        Login &middot; 
+      
+    </title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+
+    <style>
+      /* note: this is a hack for ios iframe for bootstrap themes shopify page */
+      /* this chunk of css is not part of the toolkit :) */
+      /* body {
+        width: 1px;
+        min-width: 100%;
+        *width: 100%;
+      } */
+    </style>
+
+  </head>
+
+
+<body style="background-color:rgb(51, 51, 51)">
+  
+<mat-progress-bar mode="buffer" [style.display]="loading ? 'block' : 'none'"></mat-progress-bar>
+
+
+<!-- <div class="row">
+    <div class="col sm-6">
+      <div class="card small">
+        <div class="card-content white-text">
+          <span class="card-title">Card Title</span>
+          <p>I am a very simple card. I am good at containing small bits of information.
+          I am convenient because I require little markup to use effectively.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+  <!-- <a href="../index.html" class="app-brand mb-5">
+    <img src="assets/img/brand.png" alt="brand">
+  </a><br>
+  <div class="app-brand">
+    <h3 style="font-style: italic; color:rgb(48, 151, 209)">FairShare</h3>
+  </div> -->
+
+  <mat-toolbar color="primary">
+  <mat-toolbar-row>
+      <span>Fare Share</span>
+      <span class="example-spacer"></span>
+      <!-- <mat-icon class="example-icon">favorite</mat-icon>
+      <mat-icon class="example-icon">delete</mat-icon> -->
+    </mat-toolbar-row>
+  </mat-toolbar>
+<br>
+
+  <div style="width:400px; margin:0 auto;">
+  <div class="row">
+      <div class="col s12 m6">
+        <div class="card" style="background-color:rgb(36, 36, 36)">
+          <div class="card-content white-text">
+            <span class="card-title">Log-In</span>
+            <form role="form" class="example-form" (ngSubmit)="onSave()" #f="ngForm">
+                
+                      <div class="row">
+                      <div class="input-field col s6">
+                          <input id="last_name" type="text" class="validate" required autofocus ngModel  name="username"> 
+                          <label class="active" for="last_name">Username</label>
+                        </div>
+                      </div> 
+                      
+
+                      <!-- <div class="form-group">
+                        <input class="form-control" placeholder="Username" required autofocus ngModel name="username">
+                      </div> -->
+                
+                      <!-- <div class="form-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password" required ngModel name="password">
+                      </div> -->
+                      
+      
+                      <div class="row">
+                      <div class="input-field col s12">
+                          <input id="password" type="password" class="validate" required ngModel name="password">
+                          <label class="active" for="password">Password</label>
+                        </div>
+                      </div>
+                
+                      <div class="button-row">
+                        <!-- <button class="btn btn-primary" type="submit">Log In</button> -->
+                        <button mat-raised-button color="primary" type="submit">Log In</button>
+                       
+                        <!-- <button class="btn btn-secondary" (click) = "Signup()">Sign up</button> -->
+                      </div>
+                
+                      <footer class="screen-login">
+                        <a href="#" class="text-muted">Forgot password</a>
+                      </footer>
+                      <div class="mb-5">
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw" [style.display]="loading ? 'block' : 'none' "></i>
+                      </div>
+                    </form>
+          </div>
+          <div class="card-action">
+            <span style="color:blueviolet"><a href="/#/signup"  (click) = "Signup()">Sign-Up</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+
+    <!-- <script src="../assets/js/jquery.min.js"></script>    
+    <script src="../assets/js/tether.min.js"></script>
+    <script src="../assets/js/chart.js"></script>
+    <script src="../assets/js/toolkit.js"></script>
+    <script src="../assets/js/application.js"></script> -->
+    <script>
+      // execute/clear BS loaders for docs
+      $(function(){
+        if (window.BS&&window.BS.loader&&window.BS.loader.length) {
+          while(BS.loader.length){(BS.loader.pop())()}
+        }
+      })
+
+    </script>
+  </body>
+</html>
+
+

@@ -13,20 +13,28 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatChipsModule} from '@angular/material/chips';
+
 @NgModule({
   imports: [
     MatTabsModule, MatButtonModule, MatAutocompleteModule,
      MatFormFieldModule, MatInputModule, MatSelectModule,
       MatProgressBarModule, MatTableModule, MatExpansionModule,
     MatToolbarModule, MatCardModule, MatProgressSpinnerModule,
-    MatPaginatorModule, MatGridListModule
+    MatPaginatorModule, MatGridListModule, MatSidenavModule,
+    MatListModule, MatIconModule,MatSnackBarModule,MatChipsModule
     ],
   exports: [
     MatTabsModule, MatButtonModule, MatAutocompleteModule,
      MatFormFieldModule, MatInputModule, MatSelectModule,
      MatProgressBarModule, MatTableModule, MatExpansionModule,
     MatToolbarModule, MatCardModule, MatProgressSpinnerModule,
-    MatPaginatorModule, MatGridListModule
+    MatPaginatorModule, MatGridListModule, MatSidenavModule,
+    MatListModule, MatIconModule,MatSnackBarModule,MatChipsModule
     ],
 
 })

@@ -1,2 +1,47 @@
-
+<div class="mat-app-background">
+        <mat-toolbar color="primary" style="background-color:rgb(38, 201, 185)">
+          <mat-toolbar-row>
+            <span><a href="#false" data-activates="slide-out" class="button-collapse">
+              <i class="md-36 material-icons md-light">reorder</i>
+            </a></span>
+            <span style="text-align:center; margin:0 auto;" (click)="home()"><img height="25%" width="25%" src="/assets/images/logo-1.png" alt="FareShare"></span>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        <ul id="slide-out" class="side-nav" >
+          <li>
+            <div class="user-view">
+              <div class="background">
+                <img src="assets/images/img2.png">
+              </div>
+              <a href="#login">
+                <img class="circle" src="assets/images/profile.png">
+              </a>
+              <a href="#!name">
+                <!-- <span class="white-text name">{{ username }}</span> -->
+              </a>
+              <a href="#!email">
+                <span class="white-text email">{{username}}</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <a href="#!">
+              <i class="material-icons">group_add</i>Add Friends</a>
+          </li>
+          <li>
+            <a (click)="redToProf()">
+              <i class="material-icons md-light">perm_identity</i><span class="mkwhite">Profile</span></a>
+          </li>
+          <li>
+            <!-- <div class="divider" style="color:black"></div> -->
+          </li>
+          <li>
+            <a class="subheader">Account Settings</a>
+          </li>
+          <li>
+            <a class="waves-effect" (click)="logout()">
+              <i class="material-icons md-light">power_settings_new</i>Log-Out</a>
+          </li>
+        </ul>
+</div>
 <router-outlet></router-outlet>
