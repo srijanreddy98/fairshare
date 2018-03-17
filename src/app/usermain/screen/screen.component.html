@@ -20,6 +20,9 @@
 <footer style="z-index:100">
     <nav class="navbar fixed-bottom" mat-tab-nav-bar style=" background-color:white;height:auto">
       <span style="margin:0 auto;">
+          <a mat-tab-link [routerLink]="['/usermain','screen','personal']" routerLinkActive = "activeTab" class="inActiveTab">
+            Personal
+          </a>
         <a mat-tab-link [routerLink]="['/usermain','screen','individual']" routerLinkActive = "activeTab" class="inActiveTab">
           Individual
         </a>
@@ -27,7 +30,7 @@
           Groups
         </a>
         <a mat-tab-link [routerLink]="['/usermain','screen','recent']" routerLinkActive = "activeTab" class="inActiveTab">
-          Recent Actions
+          Notifications
         </a>
       </span>
     </nav>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject} from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { saveAs } from 'file-saver';
 declare var jQuery: any;
 import { UserService } from './user.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 @Component({
   selector: 'app-usermain',
   templateUrl: './usermain.component.html',
@@ -14,7 +15,7 @@ import { UserService } from './user.service';
 
 export class UsermainComponent implements OnInit {
 
-  constructor(private el:ElementRef, private userService: UserService, private router: Router, private _cookieService: CookieService ) {
+  constructor(public dialog: MatDialog, private el:ElementRef, private userService: UserService, private router: Router, private _cookieService: CookieService ) {
     this.username = this._cookieService.get('username');
   }
   data = '';
@@ -137,6 +138,23 @@ export class UsermainComponent implements OnInit {
       this.displayExpense = true;
     }
   }
+  logout(){
+    this._cookieService.removeAll();
+    this.router.navigate(['/login']);
+  }
+  friend = false;
+  closefriend(){
+    this.friend=false;
+  }
+  friends(){
+    if(this.friend===false)
+    {
+      this.friend=true;
+    }
+    else{
+      this.friend=false;
+    }
+  }
   home()
   {
     this.router.navigate(['/usermain/screen/individual']);
@@ -229,5 +247,29 @@ export class UsermainComponent implements OnInit {
       // (getImgErr) => console.log(getImgErr)
     // );
   }
+  name = '';
+  openDialog(): void {
+    let dialogRef = this.dialog.open(friendBoxComponent, {
+      width: '400px',
+      data: { name: this.name}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 }
 // imageToShow: any;
+@Component({
+  templateUrl:'./friendBox.component.html',
+  styles : [`
+    .mat-dialog-container{
+      padding:0;
+    }
+  `]
+})
+export class friendBoxComponent {
+  constructor(
+    public dialogRef : MatDialogRef<friendBoxComponent>,@Inject(MAT_DIALOG_DATA) public data: any
+  ){ }
+}
+

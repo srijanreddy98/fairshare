@@ -1,6 +1,6 @@
 import {
   Component, OnInit, ViewEncapsulation, Injectable, trigger,
-  state, style, transition, animate, ViewChild } from '@angular/core';
+  state, style, transition, animate, ViewChild, Inject } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import {MatTableDataSource} from '@angular/material';
 import { CookieService } from 'ngx-cookie';
@@ -10,11 +10,12 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../usermain/user.service';
 import { element } from 'protractor';
 import { DataSource } from '@angular/cdk/collections';
-import { ChartReadyEvent } from 'ng2-google-charts';
-import { ChartErrorEvent } from 'ng2-google-charts';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DatePipe } from '@angular/common';
+
 
 
 @Component({
@@ -40,6 +41,10 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class TablesComponent implements OnInit {
   color = 'warn';
+  loadingrec = false;
+  count = 0;
+  referenceLines = [];
+  dateref: any;
   mode = 'indeterminate';
   @ViewChild('f') form: NgForm;
   loading = false;
@@ -61,10 +66,11 @@ export class TablesComponent implements OnInit {
   displayG = false;
   length = 100;
   pageSize = 10;
+  name = '';
   pageSizeOptions = [5, 10, 25, 100];
   pageEvent: PageEvent;
-  rec=false;
-  public lineChartData:any =  {
+  rec = false;
+  public lineChartData: any =  {
     chartType: 'LineChart',
     dataTable: [],
     //   ['Date', 'Sales', 'Expenses'],
@@ -95,6 +101,7 @@ export class TablesComponent implements OnInit {
   // ];
 
 multi = [];
+day = 86400000;
   //   {
   //     "name": "Germany",
   //     "series": [
@@ -108,7 +115,6 @@ multi = [];
   //       }
   //     ]
   //   },
-  
   //   {
   //     "name": "USA",
   //     "series": [
@@ -122,7 +128,6 @@ multi = [];
   //       }
   //     ]
   //   },
-  
   //   {
   //     "name": "France",
   //     "series": [
@@ -142,8 +147,11 @@ multi = [];
   //   }
   // ];
 
-  view: any[] = [700, 300];
-
+  view1: any[] = [600, 300];
+  view2: any[] = [600, 300];
+  timeline = true;
+  view: any[] = [400, 200];
+  showRefLines = true;
   showXAxis = true;
   showYAxis = true;
   gradient = false;
@@ -154,7 +162,7 @@ multi = [];
   yAxisLabel = ' expenditure ';
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['N/A', '#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#f44336', '#ad1457', '#0d47a1', '#311b92', '#00b8d4']
   };
 
   // line, area
@@ -177,30 +185,48 @@ multi = [];
     netamt: 0,
     rec: ''
   };
+dash = [
+    {
+      'name': 'You Owe',
+      'value' : 0
+    },
+    {
+      'name' : 'Net Total',
+      'value' : 0
+    },
+    {
+      'name' : 'You are Owed',
+      'value' : 0
+    }
+  ];
+  colorSchemed = {
+    domain: ['#A10A28', '#C7B42C', '#5AA454']
+  };
+  dview = [, 100];
+  barPadding = 9;
+  roundDomains = true;
   friendlist = [];
   show = 3;
-  j=0;
+  j = 0;
   friendCard = false;
   editRecord = false;
-  constructor( private cd: ChangeDetectorRef, private _cookieService: CookieService, private userService: UserService, private router: Router) {
+  constructor( private datePipe: DatePipe, public dialog: MatDialog, private cd: ChangeDetectorRef,
+    public _cookieService: CookieService, private userService: UserService, private router: Router) {
    }
 
   panelOpenState = false;
 
-  users: any[] = [
-    {
-      name: 'Rutvik',
-      dues: '-600',
-      // flag: './assets/images/img.jpg'
-    },
-    {
-      name: 'Srijan',
-      dues: '200',
-      // flag: 'assets/images/img2.png'
-    }
+  users: any[];
 
 
-  ];
+  lent= 0;
+  owed = 0;
+  totExp = 0;
+  addexpamt = '';
+  NOT = '';
+  usernam = '';
+
+
   filteredusers = this.userData;
   filteredfriends = this.friendlist;
   setPageSizeOptions(setPageSizeOptionsInput: string) {
@@ -294,10 +320,8 @@ multi = [];
       //         //console.log(record.timeCreated);
       //         const time = record.timeCreated.substring(0,10); 
       //         this.lineChartData.dataTable.push([time, record.amt]);
-              
       //       }
       //     }
-          
       //     console.log(this.userData.reverse());
       //     console.log(this.userData);
       //     for (const i of this.userData.reverse()) {
@@ -345,14 +369,41 @@ multi = [];
       this.getRecords();
     }
   }
-  getRecords(){
+  getRecords() {
+    this.loading = true;
+    this.multi = [];
+    this.count = 0;
+    this.lent = 0;
+    this.owed = 0;
+    this.totExp = 0;
+    this.single = [];
+    const detref = {
+      name : 'Reference',
+      series : []
+    };
+    let z = 6;
+    while ( z >= 0) {
+      const myDate = Date.now();
+      this.dateref = this.datePipe.transform(myDate - this.day * z, 'yyyy-MM-dd');
+      console.log(this.dateref);
+      const record = {
+        name : this.dateref,
+        value : 0
+      };
+      this.referenceLines.push(record);
+      detref.series.push(record);
+      z -= 1;
+    }
+    this.multi.push(detref);
     const headers = new Headers({ 'Authorization': this._cookieService.get('token') });
-    this.userService.head(this.data,headers).subscribe(
+    this.userService.head(this.data, headers).subscribe(
       (getDataResponse) => {
         console.log(getDataResponse);
         const serverData = JSON.parse(getDataResponse['_body']);
-        this.lineChartData.dataTable.push(['Date','Expenditure']);
+        this.lineChartData.dataTable.push(['Date', 'Expenditure']);
         for (const i of serverData) {
+          console.log(i.split_type);
+          if (i.first_user !== i.second_user && i.split_type > 5) {
           const record = {
             amt: 0,
             gid: -1,
@@ -374,9 +425,11 @@ multi = [];
           if (i.first_user === this.data) {
             data.friend = i.second_user;
             amt = i.amount;
+            this.lent += amt;
           } else {
             data.friend = i.first_user;
             amt = -1 * i.amount;
+            this.owed += amt;
           }
           record.amt = amt;
           record.gid = i.gid;
@@ -387,6 +440,7 @@ multi = [];
           const index = this.inArray(data.friend);
           if (index === -1) {
             data.netamt = amt;
+            this.totExp += data.netamt;
             if (data.netamt < 0) {
               data.rec = 'You owe ' + data.friend + ' ';
             }else {
@@ -394,26 +448,20 @@ multi = [];
             }
             data.record.push(record);
             this.userData.push(data);
-            this.users.push({
-              name: data.friend,
-              dues: data.netamt.toString()
-            });
+            // this.users.push({
+            //   name: data.friend,
+            //   dues: data.netamt.toString()
+            // });
           } else {
             this.userData[index].netamt += record.amt;
+            this.totExp += record.amt;
             this.userData[index].record.push(record);
           }
-          if(this.j<=5) {
-            this.j+=1;
-            //console.log(record.timeCreated);
-            const time = record.timeCreated.substring(0,10); 
-            this.lineChartData.dataTable.push([time, record.amt]);
-            
-          }
         }
-        
+        console.log(this.totExp);
         console.log(this.userData.reverse());
         console.log(this.userData);
-        for (const i of this.userData.reverse()) {
+        for (const i of this.userData) {
           const det = {
             name : '',
             value : 0,
@@ -422,17 +470,32 @@ multi = [];
             name : i.friend,
             series : []
           };
-          for( const j of i.record.reverse()){
+          const myDate = Date.now();
+          this.dateref = this.datePipe.transform(myDate - this.day * 7, 'yyyy-MM-dd');
+          const lastDate = this.dateref.substring(8, 10);
+          console.log(lastDate);
+          console.log('NEW');
+          for ( const j of i.record.reverse()){
+            console.log(j.timeCreated.substring(0, 10));
             const records = {
-              name : j.timeCreated.substring(0,10),
+              name : j.timeCreated.substring(0, 10),
               value : +j.amt
             };
-            det1.series.push(records);
+            if (records.name.substring(8, 10) > lastDate) {
+              det1.series.push(records);
+            }
           }
-          console.log(det1.name);
-          this.multi.push(det1);
-          det.value= +i.netamt;
-          det.name=i.friend;
+          // console.log(det1.name);
+          // if(this.count<=5) {
+            this.count += 1;
+            this.multi.push(det1);
+          // }
+          if (+i.netamt < 0) {
+            det.value = -1 * (+i.netamt);
+          } else{
+            det.value = +i.netamt;
+          }
+          det.name = i.friend;
           this.single.push(det);
 
           i.record.sort((a, b) => {
@@ -452,11 +515,16 @@ multi = [];
         }
         console.log(this.dataSource);
         this.loading = false;
+        this.loadingrec = false;
+        this.filteredusers = this.userData;
+        // this.cd.detectChanges();
+        this.dash[0].value = + this.owed;
+        this.dash[1].value = + this.totExp;
+        this.dash[2].value = + this.lent;
+      }
       },
       (getDataError) => { console.log(getDataError); this.loading = false; }
     );
-    this.filteredusers=this.userData;
-    this.cd.detectChanges();
   }
   inArray(needle) {
     const count = this.userData.length;
@@ -465,41 +533,40 @@ multi = [];
     }
     return -1;
   }
-  prompt=false;
-  showPrompt(){
-    this.prompt=true;
+  prompt = false;
+  showPrompt() {
+    this.prompt = true;
   }
-  closePrompt(){
-    this.prompt=false;
+  closePrompt() {
+    this.prompt = false;
   }
-  con=false;
-  confirm(){
-    this.con=true;
+  con = false;
+  confirm() {
+    this.con = true;
   }
-  lulu=false;
-  settle(i){
-    this.showPrompt()
+  lulu = false;
+  settle(i) {
+    this.loadingrec = true;
     this.lulu = true;
-    const det={
-      amount:this.selectedUser.record[i].amount,
-      first_user:this._cookieService.get("username"),
-      second_user:this.selectedUser.friend,
-      gid:'-1',
-      id:this.selectedUser.record[i].id,
+    const det = {
+      amount: this.selectedUser.record[i].amount,
+      first_user: this._cookieService.get('username'),
+      second_user: this.selectedUser.friend,
+      gid : '-1',
+      id : this.selectedUser.record[i].id,
       settled_up: true,
       split_type : this.selectedUser.record[i].split_type
     };
     const headers = new Headers({ 'Authorization': this._cookieService.get('token') });
     this.userService.editRecord(det, headers).subscribe(
       (editRecRes) => {
-       
-        this.selectedUser.record=[];
+        this.selectedUser.record = this.selectedUser.record.filter(i => i.id !== det.id);
         this.userData = [];
         this.filteredusers = [];
         this.getRecords();
         this.cd.detectChanges();
-        this.lulu=false;
-        console.log(editRecRes)
+        this.lulu = false;
+        console.log(editRecRes);
       },
       (editRecErr) => console.log(editRecErr)
     );
@@ -508,8 +575,14 @@ multi = [];
   closeaf() {
     this.friendCard = false;
   }
-  closerec(){
-    this.displayI=false;
+  closerec() {
+    this.loadingrec = true;
+    this.displayI = false;
+    this.selectedUser.record = [];
+    this.userData = [];
+    this.filteredusers = [];
+    this.getRecords();
+    // this.cd.detectChanges();
   }
   showAddFriend() {
     this.friendCard = true;
@@ -518,18 +591,18 @@ multi = [];
     this.selectedExpense = this.selectedUser.record[i];
     this.showingExp = true;
   }
-  chart=false;
-  chartOn(){
-    this.chart=true;
-    this.lchart=false;
+  chart = false;
+  chartOn() {
+    this.chart = true;
+    this.lchart = false;
   }
-  lchart=false;
+  lchart = true;
   lchartOn(){
-    this.lchart=true;
-    this.chart=false;
+    this.lchart = true;
+    this.chart = false;
   }
   chartOff(){
-    this.chart=false;
+    this.chart = false;
   }
   showHistory(index) {
     this.showHist = true;
@@ -537,7 +610,7 @@ multi = [];
     console.log(this.selectedUser.friend);
   }
   closeRec() {
-  this.showHist = false;
+    this.showHist = false;
   }
   closeExp() {
     this.showingExp = false;
@@ -658,6 +731,23 @@ multi = [];
     this.on();
     this.onI();
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddRecordComponent, {
+      width: '400px',
+      height: '400px',
+      data: { name: this.name}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadingrec = true;
+      this.displayI = false;
+      this.selectedUser.record = [];
+      this.userData = [];
+      this.filteredusers = [];
+      this.getRecords();
+      console.log('The dialog was closed');
+    });
+  }
 }
 export interface Element {
   description: string;
@@ -666,4 +756,12 @@ export interface Element {
   lastUpdated: string;
   id: string;
   gid: string;
+}
+@Component({
+  templateUrl:'./addRecord.component.html',
+})
+export class AddRecordComponent {
+  constructor(
+    public dialogRef: MatDialogRef<AddRecordComponent>, @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 }

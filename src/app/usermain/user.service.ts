@@ -10,8 +10,6 @@ export class UserService {
     url = 'https://fairshareapp2.herokuapp.com/';
     constructor(private http: Http, private sanitizer: DomSanitizer) {}
     head(data: any, headers: any) {
-        console.log('hey');
-        console.log(headers);
         return this.http.get(this.url + 'records/recordhistoryfulldatalist/' + '?username=' + data, { headers: headers });
     }
     addRecord(data: any, headers: any) {
@@ -53,5 +51,11 @@ export class UserService {
     }
     acceptRequest(data: any, headers: any) {
         return this.http.put(this.url + 'friend/friendlist/', data, { headers: headers} );
+    }
+    addRecAct( data: any, headers: any){
+        return this.http.post('https://fairshareapp2.herokuapp.com/message/notificationlist/', data, {headers:headers});
+    }
+    getRecAct( data: any, headers: any){
+        return this.http.get('https://fairshareapp2.herokuapp.com/message/notificationlist'+'?username=' + data, { headers: headers});
     }
 }

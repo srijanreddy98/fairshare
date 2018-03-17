@@ -18,6 +18,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatStepperModule } from '@angular/material/stepper';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatDialogModule } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
+
 
 @NgModule({
   imports: [
@@ -26,15 +31,16 @@ import {MatChipsModule} from '@angular/material/chips';
       MatProgressBarModule, MatTableModule, MatExpansionModule,
     MatToolbarModule, MatCardModule, MatProgressSpinnerModule,
     MatPaginatorModule, MatGridListModule, MatSidenavModule,
-    MatListModule, MatIconModule,MatSnackBarModule,MatChipsModule
+    MatListModule, MatIconModule,MatSnackBarModule,MatChipsModule, MatDialogModule, MatStepperModule,MatButtonToggleModule
     ],
   exports: [
-    MatTabsModule, MatButtonModule, MatAutocompleteModule,
+    MatTabsModule, MatButtonModule, MatAutocompleteModule,MatDialogModule,
      MatFormFieldModule, MatInputModule, MatSelectModule,
      MatProgressBarModule, MatTableModule, MatExpansionModule,
     MatToolbarModule, MatCardModule, MatProgressSpinnerModule,
     MatPaginatorModule, MatGridListModule, MatSidenavModule,
-    MatListModule, MatIconModule,MatSnackBarModule,MatChipsModule
+    MatButtonToggleModule,
+    MatListModule, MatIconModule,MatSnackBarModule,MatChipsModule,MatStepperModule
     ],
 
 })

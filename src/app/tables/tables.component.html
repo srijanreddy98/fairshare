@@ -1,198 +1,202 @@
 <mat-progress-spinner class="example-margin" [style.display] = "loading ? 'block' : 'none'" [color]='color' [mode]='mode' style="margin:0 auto;">
 </mat-progress-spinner>
 <div class="row">
-  <div class="col-lg-1"></div>
-  <div class="col-lg-6" style="padding:0% 5% 0% 0%">
-      <div class="overlay" [style.display]="showHist ? 'block' : 'none'">
-          <mat-card class="example-card"  style="margin:auto auto;margin-top:5%;opacity:0.998;padding:2%">
-            <img mat-card-avatar src="assets/images/profile.png" alt="" class="circle">
-            <mat-card-title>{{selectedUser.friend}}</mat-card-title>
-            <mat-progress-bar *ngIf="lulu" mode="indeterminate"></mat-progress-bar>
-            <mat-card-content [style.overflow]="'auto'" [style.height.px]="'200'">
-                <ng-scrollbar>
-                <ul class="collection" >
-                    <li class="collection-item avatar" *ngFor = "let dat of selectedUser.record;let in = index"  [ngClass]="{
+    <div class="col-lg-4" style="padding:0% 2% 0% 0%">
+        <div class="overlay" [style.display]="showHist ? 'block' : 'none'">
+            <mat-card class="example-card"  style="margin:auto auto;margin-top:5%;opacity:0.998;padding:2%">
+              <img mat-card-avatar src="assets/images/profile.png" alt="" class="circle">
+              <mat-card-title>{{selectedUser.friend}}</mat-card-title>
+              <mat-progress-bar *ngIf="lulu" mode="indeterminate"></mat-progress-bar>
+              <mat-card-content [style.overflow]="'auto'" [style.height.px]="'200'">
+                  <ng-scrollbar>
+                  <ul class="collection" >
+                      <li class="collection-item avatar" *ngFor = "let dat of selectedUser.record;let in = index"  [ngClass]="{
+                        trgreen:dat.amt>0,
+                        trred:dat.amt<0
+                    }">
+                    <img src="assets/images/details.png" alt="" class="circle">
+                    
+                        <span class="title" style="font-size:150%">{{dat.amt}}</span>
+                        <p style="font-size:120%;font-style:oblique">{{dat.description}}<br>
+                          <span style="font-size:80%;font-style:italic" > {{dat.timeCreated | slice:0:10}}</span> 
+                        </p>
+                        <div class="secondary-content">
+  
+                          <button mat-raised-button (click)="settle(in)">Settle Up<i class="material-icons">receipt</i></button>
+                        </div>
+                        <!-- <a href="#!" class="secondary-content"></a> -->
+                      </li>
+                    </ul>
+                  </ng-scrollbar>
+                <!-- <table >
+                  <thead>
+                    <tr>
+                      <th>Description</th>
+                      <th>Amount</th>
+                      <th>Time Added</th>
+                      <th>Date Added</th>
+                    </tr>
+                  </thead>     
+                  <tbody>
+                  <tr *ngFor = "let dat of selectedUser.record;let in = index" (click) = showExp(in) [ngClass]="{
                       trgreen:dat.amt>0,
                       trred:dat.amt<0
                   }">
-                  <img src="assets/images/details.png" alt="" class="circle">
-                  
-                      <span class="title">{{dat.amt}}</span>
-                      <p>{{dat.description}}</p>
-                      <div class="secondary-content">
-
-                        <button mat-raised-button (click)="settle(in)">Settle Up<i class="material-icons">receipt</i></button>
-                      </div>
-                      <!-- <a href="#!" class="secondary-content"></a> -->
-                    </li>
-                  </ul>
-                </ng-scrollbar>
-              <!-- <table >
-                <thead>
-                  <tr>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Time Added</th>
-                    <th>Date Added</th>
+                    <td>
+                      {{dat.description}}
+                    </td>
+                    <td>
+                      {{dat.amt}}
+                    </td>
+                    <td>
+                      {{dat.timeCreated | slice:11:19}}
+                    </td>
+                    <td>
+                      {{dat.timeCreated | slice:0:10}}
+                    </td>
                   </tr>
-                </thead>     
-                <tbody>
-                <tr *ngFor = "let dat of selectedUser.record;let in = index" (click) = showExp(in) [ngClass]="{
-                    trgreen:dat.amt>0,
-                    trred:dat.amt<0
-                }">
-                  <td>
-                    {{dat.description}}
-                  </td>
-                  <td>
-                    {{dat.amt}}
-                  </td>
-                  <td>
-                    {{dat.timeCreated | slice:11:19}}
-                  </td>
-                  <td>
-                    {{dat.timeCreated | slice:0:10}}
-                  </td>
-                </tr>
-              </tbody>
-            </table> -->
-          </mat-card-content>
-          <mat-card-actions><i class="material-icons" style="font-size: 30px " (click)=closeRec()>cancel</i></mat-card-actions>
-        </mat-card>
-      </div>
-  <div *ngIf="userData!=0" style="padding-top:0%">
-    <mat-tab-group>
-      <mat-tab label="User Records">        
-        <div>
-          <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
-            <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
-              <div class="example-header">
-                <div class="input-field">
-                  <input matInput id="email" type="email" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-                  <label for="email">Filter</label>
-                </div>
-              </div>
-            </div>
-            <ul class="collection" style="width:auto;" [style.opacity]="showHist?'0.2':'1'">
-              <div style="height:auto" [style.overflow]="'auto'" [style.height.px]="250">
-                <ng-scrollbar>
-                  <li class="collection-item avatar lig" *ngFor="let user of filteredusers; let i = index" >
-                    <img src="assets/images/profile.png" alt="" class="circle">
-                    <span class="title res">{{user.friend}}</span>
-                    <br>
-                    <p class="res" style="font-size:15px;"><br><span class="nowrap">{{user.rec }}</span> <span [style.color]="user.netamt>=0 ? 'green' : 'red'" class="nowrap">{{user.netamt}}</span> </p>
-                    <a href="#!" class="secondary-content"><i class="medium material-icons" (click) = showHistory(i)>view_list</i></a>
-                  </li>
-                  <hr style="display:none">
-                </ng-scrollbar>
-              </div>
-              <a class="collection-item"  (click)="onI()"><div style="font-size:15px">Add Record<a class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div></a>
-            </ul>
-          </div>
-        </div>
-        </mat-tab>
-        <mat-tab label="Charts">
-          <div style="min-height:400px">
-          <button mat-raised-button (click)="chartOn()">User Based Records</button>
-          <button mat-raised-button (click)="lchartOn()">Expenditure Based Records</button>
-          <div *ngIf="chart">
-          <ng-scrollbar>
-              <ngx-charts-advanced-pie-chart
-              [view]="view"
-              [scheme]="colorScheme"
-              [results]="single"
-              [gradient]="gradient"
-              (select)="onSelect($event)">
-            </ngx-charts-advanced-pie-chart>
-          </ng-scrollbar>
-          </div>
-          <div *ngIf="lchart">
-          <ng-scrollbar>
-            <ngx-charts-line-chart
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="multi"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [autoScale]="autoScale"
-            (select)="onSelect($event)">
-          </ngx-charts-line-chart>
-          </ng-scrollbar>
-          </div>
-        </div>
-
-            <!-- <google-chart [data]="lineChartData" (chartReady)="ready($event)" (chartError)="error($event)" (chartSelect)="select($event)"></google-chart> -->
-        </mat-tab>
-     </mat-tab-group>
-      </div>
-      <div *ngIf="!userData?.length>0 && !loading">
-        <div style="padding-top:10%">
-          <mat-card>
-            <mat-card-title>There are no Records</mat-card-title>
-            <mat-card-content>
-                There are no records to display.
-                <!-- <app-add-friends></app-add-friends> -->
+                </tbody>
+              </table> -->
             </mat-card-content>
-            <mat-card-actions>
-                <button mat-button (click)="addExpense(1)">Add New Record</button>
-                <button mat-button (click)="showAddFriend()">Add New Friend</button>
-            </mat-card-actions>
+            <mat-card-actions><i class="material-icons" style="font-size: 30px " (click)=closeRec()>cancel</i></mat-card-actions>
           </mat-card>
-          </div>
-      </div>
-    </div>
-    <div class="col-lg-4" style="padding-top:5%;padding-left:0%" [style.display]="loading ? 'none' : 'block'">
-        
-                <app-friendlist></app-friendlist>
-        
-                <!-- <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">               
-                    <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'" style="background-color:rgb(43,43,43)">
-                        <div class="example-header">
-                          <div class="input-field">
-                            <input matInput id="email" style="color:white" type="email" (keyup)="applyFriendsFilter($event.target.value)" placeholder="Filter">
-                            <label for="email">Filter</label>
-                          </div>
-                        </div>
-                      </div>
-        
-        
-                  <div [style.overflow]="'auto'"> 
-                        <ul class="collection with-header" style="background-color:rgb(43,43,43);border-color:rgb(43,43,43);color:white">
-                            <li class="collection-header" style="background-color:rgb(43,43,43);border-color:rgba(26, 25, 25, 0.459)"><h4 style="font-size:20px">Friends</h4></li>
-                                        
-                            <div [style.max-height.px]="'300'" style="height:auto" [style.overflow]="'auto'" [style.height.px]="'200'">
-                              <ng-scrollbar>
-                            <li class="collection-item" *ngFor="let friend of filteredfriends" style="background-color:rgb(43,43,43);border-color:rgba(26, 25, 25, 0.459)">
-                              <div style="font-size:15px">{{friend.friend}}<a href="#!" class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div>
-                            </li>
-                            <hr style="display:none">
-                            </ng-scrollbar>
-                          </div> 
-                        </ul>
+        </div>
+    <div *ngIf="userData!=0" style="padding-top:0%">
+      <!-- <mat-tab-group>
+        <mat-tab label="User Records">       -->
+            <div *ngIf="!userData?.length>0 && !loading && !loadingrec">
+                <div style="padding-top:10%">
+                  <mat-card>
+                    <mat-card-title>There are no Records</mat-card-title>
+                    <mat-card-content>
+                        There are no records to display.
+                        <!-- <app-add-friends></app-add-friends> -->
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button (click)="addExpense(1)">Add New Record</button>
+                        <button mat-button (click)="showAddFriend()">Add New Friend</button>
+                    </mat-card-actions>
+                  </mat-card>
+               </div>
+            </div>  
+          <div *ngIf="!loadingrec">
+            <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
+              <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
+                <div class="example-header">
+                  <div class="input-field">
+                    <input matInput id="email" type="email" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                    <label for="email">Filter</label>
+                  </div>
                 </div>
-                </div> -->
+              </div>
+              <ul class="collection" style="width:auto;" [style.opacity]="showHist?'0.2':'1'">
+                <div style="height:auto" [style.overflow]="'auto'" [style.height.px]="400" >
+                    <ng-scrollbar rebuild-on-resize>
+                    <li class="collection-item avatar lig" *ngFor="let user of filteredusers; let i = index" >
+                      <img src="assets/images/profile.png" alt="" class="circle">
+                      <span class="title res">{{user.friend}}</span>
+                      <span class="res" style="font-size:15px;"><br><span class="nowrap">{{user.rec }}</span> <span [style.color]="user.netamt>=0 ? 'green' : 'red'" class="nowrap">{{user.netamt}}</span> </span>
+                      <a href="#!" class="secondary-content"><i class="material-icons" (click) = showHistory(i)>view_list</i></a>
+                    </li>
+                    <!-- <hr style="display:none"> -->
+                  </ng-scrollbar>
+                </div>
+                <a class="collection-item"  (click)="openDialog()"><div style="font-size:15px">Add Record<a class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div></a>
+              </ul>
             </div>
+          </div>
+          <div *ngIf="loadingrec">
+              <mat-spinner></mat-spinner>
+          </div>
+          <!-- </mat-tab> -->
+          <!-- <mat-tab label="Charts"> -->
+  
+              <!-- <google-chart [data]="lineChartData" (chartReady)="ready($event)" (chartError)="error($event)" (chartSelect)="select($event)"></google-chart> -->
+          <!-- </mat-tab>
+       </mat-tab-group> -->
+        </div>
+      </div>
+  
+  <div class="col-lg-8">
+  <mat-card class="row" *ngIf="!loading" style="margin:0 auto;overflow:auto">
+    <mat-card-title><img height='4%' width='4%' src='/assets/images/profile.png'>&emsp;Dashboard</mat-card-title>
+    <hr>
+    <mat-card-content>
+      <ngx-charts-bar-horizontal
+      [view]="dview"
+      [scheme]="colorSchemed"
+      [results]="dash"
+      [roundDomains]="roundDomains"
+      [barPadding]="barPadding"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      (select)="onSelect($event)">
+    </ngx-charts-bar-horizontal>
+  </mat-card-content>
+  <!-- <mat-card-footer><b>You Owe</b> : {{owed}}</mat-card-footer> -->
+  </mat-card>
+  <br>
+
+  <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="!loading" >
+      <mat-button-toggle value="left" (click)="lchartOn()">
+          <span>Expenditure Based Records</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="center" (click)="chartOn()">
+    <span >User Based Records</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+<mat-card *ngIf="!loading">
+  <div style="min-height:300px">
+  
+  <div *ngIf="chart">
+  <ng-scrollbar>
+      <ngx-charts-advanced-pie-chart
+      [view]="view1"
+      [scheme]="colorScheme"
+      [results]="single"
+      [gradient]="gradient"
+      (select)="onSelect($event)">
+    </ngx-charts-advanced-pie-chart>
+  </ng-scrollbar>
   </div>
-  <!-- <div class="overlay" [style.display]="friendCard ? 'block' : 'none'" style="padding-top:5%">
+  <div *ngIf="!loading && lchart" >
+  <ng-scrollbar style="overflow-x: hidden; overflow-y: auto;">
+    <ngx-charts-line-chart
+    [view]="view2"
+    [timeline]="timeline"
+    [scheme]="colorScheme"
+    [results]="multi"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [timeline]="timeline"
+    [legend]="showLegend"
+    [referenceLines]="referenceLines"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [autoScale]="autoScale"
+    (select)="onSelect($event)">
+  </ngx-charts-line-chart>
+  </ng-scrollbar>
+  </div>
+</div>
+</mat-card>
+  </div>
+  </div>
+<div class="row">
+  <!-- <div class="col-lg-1"></div> -->
 
-    <app-upper-card></app-upper-card>
-      <mat-card class="example-card2" style="margin:auto auto;background-color:rgb(43,43,43);">
-          <mat-card-header>
-              <img mat-card-avatar src="assets/images/addfriend.png">
-              <mat-card-title>Add Friends</mat-card-title>
-            </mat-card-header>
-        <app-add-friends></app-add-friends>
-        <mat-card-actions><i class="material-icons" (click)="closeaf()">close</i></mat-card-actions>
-        </mat-card>
-  </div> -->
+<div class="col-lg-4"></div>
+    <div class="col-lg-7" style="padding-top:2%">
 
-
+      </div>
 
 <div class="overlay" [style.display]="showingExp ? 'block' : 'none'">
   <mat-card class="example-card2" style="margin:auto auto;">
@@ -237,7 +241,7 @@
   <form class="col-s12" role="form" class="example-form" (ngSubmit)="onSave()" #f="ngForm">
     <div class="row">
       <div class="input-field col s12">
-        <input id="email" type="email" class="validate" name="usernam" [(ngModel)]="username"  value="{{selectedUser.friend}}" [disabled]="true">
+        <input id="email" type="email" class="validate" name="usernam" [(ngModel)]="usernam"  value="{{selectedUser.friend}}" [disabled]="true">
         <label for="email"></label>
       </div>
     </div>
@@ -273,7 +277,7 @@
       </mat-select>
     </mat-form-field>
     <div class="input-field col s12">
-      <textarea id="textarea1" class="materialize-textarea" ngModel name="descrip" data-length="20" maxlength="20" placeholder="{{selectedExpense.description}}" [disabled]="username==='' || addexpamt === ''|| NOT==='' ? true : false"></textarea>
+      <textarea id="textarea1" class="materialize-textarea" ngModel name="descrip" data-length="20" maxlength="20" placeholder="{{selectedExpense.description}}" [disabled]="usernam==='' || addexpamt === ''|| NOT==='' ? true : false"></textarea>
       <label for="textarea1">Description</label>
     </div>
     <button mat-raised-button>Submit</button>
@@ -293,9 +297,12 @@
   <div [@divState]="state">
 
     <app-upper-card *ngIf="displayI"></app-upper-card>
-    <!-- <app-group-card [style.display]="displayG ? 'block' : 'none'"></app-group-card>  -->
   </div>
 </div>
+
+
+
+
 <!-- <a href="#false" data-activates="slide-out" class="button-collapse">
         <i class="medium material-icons">reorder</i>
       </a> -->
@@ -305,7 +312,7 @@
   </a>
   <ul>
     <li>
-      <a class="btn-floating red" (click)="onI()">
+      <a class="btn-floating red" (click)="openDialog()">
         <i class="material-icons">person_add</i>
       </a>
     </li>

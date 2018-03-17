@@ -65,7 +65,34 @@ export class AddFriendsComponent implements OnInit {
             }
           }
           if (this.flag === false) {
+            const notifs = 
+            {
+              receiver: "",
+              doer : "",
+              record : "",
+              body : "",
+              description : ""
+            }
             this.openSnackBar('Friend request sent to ' + data.second_user, '');
+            console.log('GANDUU');
+            notifs.receiver = data.second_user;
+            notifs.doer = this._cookieService.get('username');
+            notifs.record = '-1';
+            notifs.body = 'SFR';
+            notifs.description = notifs.doer + ' sent a friend request to you' ;
+            this.userService.addRecAct(notifs,headers).subscribe(
+              (resp)=>
+              {
+                console.log(notifs);
+                console.log("GANDU");
+                console.log(resp);
+              },
+              (err) =>
+              {
+                console.log("HII");
+                console.log(err);
+              }
+            );
           }else {
             this.openSnackBar(data.second_user + ' is already your friend',  '');
           }

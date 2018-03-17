@@ -6,6 +6,7 @@ import {
   animate,  ElementRef  } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from "ngx-cookie";
+import * as jQuery from 'jquery';
 declare var jQuery: any;
 @Component({
   selector: 'app-screen',

@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
 import { UserService } from '../usermain/user.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-autocomplete',
@@ -14,7 +15,7 @@ import { UserService } from '../usermain/user.service';
   styleUrls: ['./autocomplete.component.css']
 })
 export class AutocompleteComponent implements OnInit{
-  myControl: FormControl = new FormControl();
+  myControl: FormControl;
   filteredUsers: Observable<any[]>;
   @ViewChild('f') form: NgForm;
   username= '';
@@ -40,16 +41,14 @@ export class AutocompleteComponent implements OnInit{
   users = [];
   color = 'warn';
   mode = 'indeterminate';
-  
-  constructor(private userService: UserService, private router: Router, private _cookieService: CookieService ) {
-    // this.myControl = new FormControl();
-    this.getFriendList();
-   }
+  constructor(public snackBar: MatSnackBar, private userService: UserService, private router: Router, private _cookieService: CookieService ) { }
   ngOnInit() {
-    
-    this.filteredUsers = this.myControl.valueChanges
-          .startWith(null)
-          .map(user => user ? this.filterUsers(user) : this.users.slice());
+    this.getFriendList();
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
   onSave() {
     const data = {
@@ -68,8 +67,8 @@ export class AutocompleteComponent implements OnInit{
       data.second_user = this.form.value.usernam;
       data.first_user = this._cookieService.get('username');
     }else {
-      data.first_user = this._cookieService.get('username');
-      data.second_user = this.form.value.usernam;
+      data.first_user = this.form.value.usernam;
+      data.second_user = this._cookieService.get('username'); 
     }
     if (this.form.value.nature === '4' || this.form.value.nature === '3') {
       data.split_type = 50;
@@ -79,12 +78,48 @@ export class AutocompleteComponent implements OnInit{
     this.tryAddExp = true;
     this.userService.addRecord(data, headers).subscribe(
       (addRecRes) => { // console.log(addRecRes); 
-        this.tryAddExp = false; this.successAddExp = true; this.errAddExp = false; },
-      (addRecErr) => { console.log(addRecErr); this.tryAddExp = false; this.successAddExp = false; this.errAddExp = true; }
+        const id = JSON.stringify(addRecRes).split(':')[6].split(',')[0];
+        const notifs = {
+          receiver : '',
+          doer : this._cookieService.get('username'),
+          record :  id ,
+          body : 'CRR',
+          description : ''
+        }
+        if(data.first_user=this._cookieService.get('username')){
+          notifs.receiver=data.second_user;
+          notifs.description=notifs.doer + ' added a record with you';
+        }
+        // this.openSnackBar("Successfully added the record",'');
+        else
+        {
+          notifs.receiver=data.first_user;
+          notifs.description=notifs.doer + ' added a record with you';
+        }
+        this.userService.addRecAct(notifs,headers).subscribe(
+          (succ)=>
+          {
+            console.log(succ);
+          },
+          (err)=>
+          {
+            console.log(err);
+          }
+        );
+        this.tryAddExp = false; this.successAddExp = true; this.errAddExp = false; 
+        this.openSnackBar("Successfully added the record",'');
+        this.form.reset();
+      },
+      (addRecErr) => { 
+        console.log(addRecErr); 
+        this.tryAddExp = false; 
+        this.successAddExp = false; 
+        this.errAddExp = true; 
+        this.openSnackBar("Error adding record",'Fill in all the fields.');
+      }
     );
   }
   return() {
-    
     this.tryAddExp = false; this.successAddExp = false; this.errAddExp = false;
   }
   filterUsers(name: string) {
@@ -95,10 +130,18 @@ export class AutocompleteComponent implements OnInit{
   //   return this..filter(user =>
   //     user.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
   // }
+  // openSnackBar(message: string, action: string) {
+  //   this.snackBar.open(message, action, {
+  //     duration: 2000,
+  //   });
+  // }
   reset() {
     this.myControl.reset();
   }
   ngOnChanges() {
+  }
+  resetForm(){
+    this.form.reset();
   }
   getFriendList() {
     this.data = this._cookieService.get('username');
@@ -130,6 +173,10 @@ export class AutocompleteComponent implements OnInit{
           this.users.push(det);
           console.log(this.users);
         }
+        this.myControl = new FormControl();
+        this.filteredUsers = this.myControl.valueChanges
+          .startWith(null)
+          .map(user => user ? this.filterUsers(user) : this.users.slice());
       },
       (error) => {
         console.log(error);
@@ -147,5 +194,6 @@ export class AutocompleteComponent implements OnInit{
   //   // this.filteredusers=filterValue;
   // }
 }
+
 export class SelectOverviewExample {
 }

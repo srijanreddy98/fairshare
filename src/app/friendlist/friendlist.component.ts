@@ -42,7 +42,9 @@ export class FriendlistComponent implements OnInit {
       duration: 2000,
     });
   }
+  loading = false;
   getFriendList() {
+      this.loading=true;
       this.data = this._cookieService.get('username');
       const headers = new Headers({ 'Authorization': this._cookieService.get('token') });
       this.userService.getFriendList(this.data, headers).subscribe(
@@ -82,6 +84,7 @@ export class FriendlistComponent implements OnInit {
           this.filteredfriends = this.acceptedFriends;
           this.label = this.count.toString()+" new Requests";
           console.log(this.requestedFriends);
+          this.loading=false;
         },
         (error) => {
           console.log(error);

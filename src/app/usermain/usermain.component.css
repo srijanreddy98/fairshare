@@ -17,7 +17,6 @@ img:hover{
 .dropdown-user:hover {
   cursor: pointer;
 }
-
 .table-user-information>tbody>tr {
   border-top: 1px solid rgb(221, 221, 221);
 }
@@ -29,6 +28,20 @@ img:hover{
 .table-user-information>tbody>tr>td {
   border-top: 0;
 }
+#mydiv {
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  background-color: #f3f3f3;
+}
+.topcorner{
+  position:absolute;
+  top:5%;
+  right:5%;
+ }
+/* .mat-dialog-container{
+  padding: 0;
+} */
 .overlay {
   position: fixed;
   /* Sit on top of the page content */
@@ -41,8 +54,6 @@ img:hover{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.74);
-  color: wheat;
   /* Black background with opacity */
   z-index: 2;
   /* Specify a stack order in case you're using a different order for other elements */

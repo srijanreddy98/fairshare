@@ -1,10 +1,12 @@
 <div class="mat-app-background">
-        <mat-toolbar color="primary" style="background-color:rgb(38, 201, 185)">
+        <mat-toolbar color="primary" style="background-color:rgb(38, 201, 185);min-height: 40px;">
           <mat-toolbar-row>
-            <span><a href="#false" data-activates="slide-out" class="button-collapse">
+            <span><a  data-activates="slide-out" class="button-collapse">
               <i class="md-36 material-icons md-light">reorder</i>
             </a></span>
-            <span style="text-align:center; margin:0 auto;" (click)="home()"><img height="25%" width="25%" src="/assets/images/logo-1.png" alt="FareShare"></span>
+            <span style="text-align:center; margin:0 auto;" (click)="home()"><img height="20%" width="20%" src="/assets/images/logo-1.png" alt="FareShare"></span>
+            <span class="example-spacer"></span>
+            <img height="40px" width="40px" src="/assets/images/friends.png" (click)="openDialog()">
           </mat-toolbar-row>
         </mat-toolbar>
         <ul id="slide-out" class="side-nav" >
@@ -44,4 +46,11 @@
           </li>
         </ul>
 </div>
+<!-- <div class="overlay"  [style.display]="friend ? 'block' : 'none'" style="padding-top:0%">
+  <i class="medium material-icons topcorner " style="color:black" (click)="closefriend()">close</i>
+  <div id="mydiv" style="color:black">
+      <app-friendlist></app-friendlist>
+  </div> -->
+  
+<!-- </div> -->
 <router-outlet></router-outlet>

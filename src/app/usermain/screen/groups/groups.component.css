@@ -6,7 +6,7 @@
   min-width: auto;
 }
 
-.example-card {
+.example-card-group {
   width: 50%;
   padding-top: 20%;
 }
@@ -40,7 +40,7 @@ body {
 }
 
 .lig:hover {
-  background-color: yellow;
+  background-color: rgb(194, 194, 194);
 }
 
 .mat-table {
@@ -75,7 +75,10 @@ body {
 .example-spacer {
   flex: 1 1 auto;
 }
-
+.grey-settings{
+  color:rgb(48, 48, 48);
+  font-size: 26px;
+}
 .material-icons.md-light {
   color: rgba(255, 255, 255, 1);
 }
@@ -118,6 +121,26 @@ body {
   cursor: pointer;
   /* Add a pointer on hover */
 }
+.overlay-group-add {
+  position: fixed;
+  /* Sit on top of the page content */
+  /* Hidden by default */
+  width: 100%;
+  /* Full width (cover the whole page) */
+  height: 100%;
+  /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.747);
+  /* Black background with opacity */
+  z-index: 2;
+  /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer;
+  /* Add a pointer on hover */
+}
+
 
 .example-form {
   min-width: 150px;
@@ -128,12 +151,3 @@ body {
 .example-full-width {
   width: 100%;
 }
-
-.mat-tab-label {
-  min-width: 20px;
-  width: 20px;
-  height: 42px;
-  border-radius: 3px;
-  background-color: #e0e0e0;
-}
-

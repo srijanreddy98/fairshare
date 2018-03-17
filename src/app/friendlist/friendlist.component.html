@@ -14,8 +14,9 @@
                 <!-- <div style="font-size:15px">
                 <li class="collection-item" style="background-color:rgb(43,43,43);border-color:rgba(26, 25, 25, 0.459)"><h4>Add Friend</h4></li>
                 </div> -->
-                                                        
-                <div [style.max-height.px]="'300'" style="height:auto" [style.overflow]="'auto'" [style.height.px]="'180'">
+                <div *ngIf="!loading">                                      
+                <div [style.max-height.px]="'700'" style="height:auto" [style.overflow]="'auto'" [style.height.px]="'250'">
+                  
                   <ng-scrollbar>
                     <li class="collection-item avatar" *ngFor="let friend of filteredfriends">
                       <img src="assets/images/profile.png" alt="" class="circle">
@@ -28,6 +29,10 @@
                       </li>
                     </ng-scrollbar>
                   </div> 
+                  </div>
+                  <div *ngIf="loading" style="padding-left:40%">
+                          <mat-spinner></mat-spinner>
+                  </div>
                   <a class="collection-item" (click)="showAddFriend()"><div style="font-size:15px">Add Friend<a class="secondary-content"><i class="material-icons">person_add</i></a></div></a>
                   <!-- <a  style="font-size:15px" class="collection-item" >Add Friend <i class="material-icons">person_add</i></a> -->
               </ul>
@@ -39,8 +44,9 @@
       <ul class="collection with-header" >
         <div [style.max-height.px]="'300'" style="height:auto" [style.overflow]="'auto'" [style.height.px]="'200'">
           <ng-scrollbar>
-            <div *ngIf="requestedFriends.length === 0">
-              <li ><p style="font-size:15px">You have no requests.</p>  </li>
+            <div *ngIf="requestedFriends.length === 0" style="padding:5%">
+              <h1>You have no requests</h1>
+              <button mat-raised-button (click)="showAddFriend()">Send Request</button>
             </div>
             <div  *ngFor="let friend of requestedFriends">
             <li class="collection-item avatar">

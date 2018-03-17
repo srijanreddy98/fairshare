@@ -1,201 +1,257 @@
-<!-- <div class="container">
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <table class="table table-striped">
-        <thead class="thead-inverse">
-          <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Id</th>
-          </tr>
-        </thead>
-        <tr *ngFor = "let group of userGroups; let i =index" (click) = "showGroup(i)">
-          <td>{{group.name}}</td>
-          <td>{{group.g_type}}</td>
-          <td>{{group.id}}</td>
-        </tr>
-      </table>
-    </div>
-  <div class="col-md-4"><div class="card" [style.display] = "showGroupDetail ? 'block' : 'none'" >
-    <img class="card-img-top img-fluid" src="http://twochicago.com/blog/wp-content/uploads/2013/03/paris.jpg" alt="Card image cap">
-    <div class='overlay' [style.display]="loadingGroupDetails ? 'block' : 'none' ">
-      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-    </div>
-    <div class="card-block" [style.display]="loadingGroupDetails ? 'none' : 'block' ">
-      <h3 class="card-title">{{ userGroups[selectedGroupIndex].name }}</h3>
-      <p class="card-text">
-        <span *ngFor = "let member of selectedGroup">
-          {{ member }}
-        </span>
-      </p><br>
-      <button class="btn btn-danger" (click) = "deleteGroup()">Delete Group</button>
-    </div>
-  </div></div>
-  </div>
-</div>
-
-
-
-
-<div [style.overflow]="'auto'" style="background-color:white;border-color:black;color:black">
-  <ul class="collection" style="background-color:white;border-radius:5px;border-color:black;width:auto;" [style.opacity]="showHist?'0.2':'1'">
-    <li>
-      <form (ngSubmit)="onSave()" #f="ngForm">
-        <mat-form-field class="demo-chip-list">
-          <mat-chip-list #chipList>
-            <mat-chip style="background:#e65c26" *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (remove)="remove(fruit)">
-              {{fruit.friend}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input name='inpu' placeholder="Add friend..." [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" (keyup)="applyFriendsFilter($event.target.value, false)"
-            />
-          </mat-chip-list>
-        </mat-form-field>
-      </form>
-    </li>
-    <div [style.overflow]="'auto'" [style.height.px]="300">
-      <ng-scrollbar>
-        <li class="collection-item avatar lig" *ngFor="let friend of filteredfriends; let i = index" style="background-color:white;border-color:rgb(31, 31, 31)"
-          (click)="addFriend(friend.friend)">
-          <img src="assets/images/profile.png" alt="" class="circle">
-          <span class="title res" style="color:black">{{friend.friend}}</span>
-          <br>
-          <p class="res" style="font-size:15px;color:black">
-            <br>
-            <span class="nowrap">5</span>
-            <span [style.color]="5>=0 ? 'green' : 'red'" class="nowrap">6</span>
-          </p>
-          <a href="#!" class="secondary-content">
-            <i class="medium material-icons" (click)="showGroupHistory(i)">view_list</i>
-          </a>
-        </li>
-        <hr style="display:none">
-      </ng-scrollbar>
-    </div>
-  </ul>
-</div>
-
-
--->
 <div style="padding: 0% 10% 0%">
 <mat-progress-spinner class="example-margin" [style.display]="loading ? 'block' : 'none'" [color]='color' [mode]='mode' style="margin:0 auto;">
 </mat-progress-spinner>
   <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-      <div class="overlay" [style.display]="showGroupDetail ? 'block' : 'none'">
-        <mat-card class="example-card" style="margin:auto auto;margin-top:2%;background-color:rgba(255, 255, 255);opacity:0.998;border-radius:5px;">
-          <img mat-card-avatar src="assets/images/profile.png" alt="" class="circle">
-          <mat-card-title>Aise kaise BC</mat-card-title>
-          <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" *ngIf = "!showAddFri"> 
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+      <!-- <div class="overlay" [style.display]="addGroupSettings ? 'block' : 'none'">
+        <mat-card class="example-card-group" 
+          style="margin:auto auto;margin-top:2%;background-color:rgba(255, 255, 255);opacity:0.998;border-radius:5px;">
+          <mat-card-title>
+            <div class="row">
+              <div class="col-sm-4">
+                <img mat-card-avatar src="assets/images/profile.png" alt="" class="circle">
+              </div>
+              <div class="col-sm-6">
+                  
+              </div>
+            </div>
+          </mat-card-title>
+          <mat-horizontal-stepper>
+            <mat-step [stepControl]="firstFormGroup">
+              <ng-template matStepLabel>Fill out your name</ng-template>
+              <div [style.overflow]="'auto'" style="background-color:white;border-color:rgb(255, 255, 255);color:black; height:100px">
+                <i class="material-icons" (click)="showAddFriend()">arrow_back</i>
+                <ul *ngIf="filteredfriends.length > 0" class="collection" style="background-color:white;border-radius:5px;border-color:black;width:auto;"
+                  [style.opacity]="showHist?'0.2':'1'">
+                  <li>
+                    <form [formGroup] = >
+                      <mat-form-field class="demo-chip-list">
+                        <mat-chip-list #chipList>
+                          <mat-chip style="background:#e65c26" *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (remove)="remove(fruit)">
+                            {{fruit.friend}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                          </mat-chip>
+                          <input name='inpu' placeholder="Add friend..." [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" (keyup)="applyFriendsFilter($event.target.value, false)"
+                          />
+                        </mat-chip-list>
+                      </mat-form-field>
+                    </form>
+                  </li>
+                  <div [style.overflow]="'auto'" [style.height.px]="300">
+                    <ng-scrollbar>
+                      <li class="collection-item avatar lig" *ngFor="let friend of filteredfriends; let i = index" style="background-color:white;border-color:rgb(31, 31, 31)"
+                        (click)="addFriend(friend.friend)">
+                        <img src="assets/images/profile.png" alt="" class="circle">
+                        <span class="title res" style="color:black">{{friend.friend}}</span>
+                        <br>
+                        <p class="res" style="font-size:15px;color:black">
+                          <br>
+                          <span class="nowrap">5</span>
+                          <span [style.color]="5>=0 ? 'green' : 'red'" class="nowrap">6</span>
+                        </p>
+                        <a  class="secondary-content">
+                          <i class="medium material-icons" (click)="showGroupHistory(i)">view_list</i>
+                        </a>
+                      </li>
+                      <hr style="display:none">
+                    </ng-scrollbar>
+                  </div>
+                </ul>
+                <ul *ngIf="filteredfriends.length === 0">
+                  All your friends are already in your group!
+                </ul>
+              </div>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+              <form (ngSubmit)="createGroupFunc()" #createGroupFrom="ngForm">
+                <input matInput name="groupname" [(ngModel)]="groupname" placeholder="GroupName">
+                <mat-form-field>
+                  <mat-select placeholder="Group Type">
+                    <mat-option value=1>1</mat-option>
+                    <mat-option value=2>2</mat-option>
+                    <mat-option value=3>3</mat-option>
+                    <mat-option value=4>4</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button mat-raised-button>Submit</button>
+              </form>
+            </mat-step>
+            </mat-horizontal-stepper>
+        </mat-card>
+      </div> -->
+      <div class = "overlay" id="groupSettings" [style.display]="showGroupSettings ? 'block' : 'none'">
+        <mat-card class="example-card-group" 
+        style="margin:auto auto;margin-top:1%;background-color:rgba(255, 255, 255);opacity:0.998;border-radius:5px;width:540px"
+        >
+        <mat-card-title>
+          &emsp;&emsp;<mat-list role="list">
+            <mat-list-item role="listitem">
+              <i matListIcon class="material-icons" style="font-size:36px;margin-top:18px;">settings</i>
+              <h3 matLine> Group Settings </h3> <span style="flex:1 1 auto"></span><i class="material-icons" (click)="openFriendsDialog()">person_add</i>
+              <p matLine>
+                <span class="text-muted"> Created by <span *ngIf="_cookieService.get('username') === selectedGroupDetails.username; else noMatch"> You</span> 
+                  <ng-template #noMatch> {{selectedGroupDetails.username}} </ng-template>
+                </span>
+              </p>
+            </mat-list-item>
+            </mat-list>
+        </mat-card-title>
+        <mat-card-content [style.overflow]="'auto'" style="margin-bottom:0px;" [style.height.px]="'340'">
+          <mat-button-toggle-group #group="matButtonToggleGroup" style="width: 480px" (change) = "selectedToggleChange($event)">
+            <mat-button-toggle value="AP" style="width: 120px">
+              Apartment
+            </mat-button-toggle>
+            <mat-button-toggle value="PA" style="width: 120px">
+              House
+            </mat-button-toggle>
+            <mat-button-toggle value="TR" style="width: 120px">
+              Trip
+            </mat-button-toggle>
+            <mat-button-toggle value="OT" style="width: 120px">
+              Others
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+          <mat-list role="list">
+            <mat-list-item role="listitem" *ngFor="let user of selectedGroup; let i = index" (click)="openDialog(user)">
+              <img matListAvatar src="assets/images/profile2.png" alt="">
+              <h3 matLine *ngIf="_cookieService.get('username') === user; else otherwise"> You </h3>
+              <ng-template #otherwise> {{user}}</ng-template>
+              <p matLine>
+                <span class="text-muted"> rockstar@sss.in </span>
+              </p>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+      </div>
+      <div class="overlay" [style.display]="showGroupDetail && !showGroupSettings ? 'block' : 'none'">
+        <mat-card class="example-card-group" 
+          style="margin:auto auto;margin-top:1%;background-color:rgba(255, 255, 255);opacity:0.998;border-radius:5px;width:540px"
+          >
+          <i style="position:absolute;margin-top:5px;right:15px" (click)="showGroupSettings = showGroupSettings ? false : true; call()" [class.grey-settings]="mouseOvered.groupSettings"  (mouseover)="mouseOvered.groupSettings=true" (mouseout)="mouseOvered.groupSettings=false" class="material-icons">settings</i>
+          <mat-card-title>
+            <div class="row">
+              <div class="col-sm-4"><img mat-card-avatar src="assets/images/profile.png" alt="" class="circle"></div>
+              <div class="col-sm-6"></div>
+            </div>
+          </mat-card-title>
+          <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" *ngIf = "!showAddFri && !showGroupSettings"> 
             <mat-tab>
               <ng-template mat-tab-label>
-              <i class="material-icons">list</i>
-                </ng-template>
-          <mat-card-content [style.overflow]="'auto'" [style.height.px]="'350'">
-            <div style="padding-top:10%">
-              <ng-scrollbar>
-              <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
-                <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
-                  <div class="example-header">
-                    <div class="input-field">
-                      <input matInput id="email" type="email" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-                      <label for="email">Filter</label>
+                <i class="material-icons">list</i>
+              </ng-template>
+              <mat-card-content [style.overflow]="'auto'" style="margin-bottom:0px;" [style.height.px]="'340'">
+                <div style="padding-top:0%; height: 50px">
+                  <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
+                    <div class="example-container mat-elevation-z8" [style.display] = "loading ? 'none' : 'block'">
+                      <div class="example-header">
+                        <div class="input-field">
+                          <input matInput id="email" type="email" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                          <label for="email">Filter</label>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                    <ul class="collection" style="width:auto;" [style.opacity]="showHist?'0.2':'1'">
+                      <div style="height:auto" [style.overflow]="'auto'" [style.height.px]="180">
+                        <ng-scrollbar>
+                          <li class="collection-item avatar lig" *ngFor="let rec of selectedRecs; let i = index" >
+                            <img src="assets/images/expense.png" alt="" class="circle">
+                            <span class="title res">{{rec.description}}</span>
+                            <span class="res text-muted" style="font-size:15px;"><br><span>{{rec.friend }}</span>
+                              <br><span class="text-muted">Added On: {{rec.timeCreated | slice:0:10}}</span>
+                               &nbsp; Dues:<span [style.color]="rec.amt>=0 ? 'green' : 'red'" class="nowrap">{{rec.amt}}</span> </span>
+                            
+                                    <div class="secondary-content"> <button mat-raised-button style="min-width:20px;width:40px;height:36px;"><i style="padding-right:10px;text-align:left" class="material-icons">mode_edit</i></button> 
+                                      <button mat-raised-button (click)="settle(i)">Settle Up
+                                                      <i class="material-icons">receipt</i>
+                                                    </button></div>
+                          </li>
+                          <hr style="display:none">
+                        </ng-scrollbar>
+                      </div>
+                      <!-- <a class="collection-item" (click)="showAddFriend()"><div style="font-size:15px"><a class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div></a> -->
+                    </ul>
+                    <a class="collection-item" (click)="addRecordDialog()">
+                      <div style="font-size:15px">Add Record
+                        <a class="secondary-content">
+                          <i class="material-icons">add_circle_outline</i>
+                        </a>
+                      </div>
+                    </a>
+                  </div>   
                 </div>
-                <ul class="collection" style="width:auto;" [style.opacity]="showHist?'0.2':'1'">
-                  <div style="height:auto" [style.overflow]="'auto'" [style.height.px]="240">
-                    <ng-scrollbar>
-                      <li class="collection-item avatar lig" *ngFor="let rec of selectedRecs; let i = index" >
-                        <img src="assets/images/expense.png" alt="" class="circle">
-                        <span class="title res">{{rec.description}}</span>
-                        <br>
-                        <p class="res" style="font-size:15px;"><br><span class="nowrap">Record with {{rec.friend }}</span> &emsp;&nbsp; Dues:<span [style.color]="rec.amt>=0 ? 'green' : 'red'" class="nowrap">{{rec.amt}}</span> </p>
-                        <a href="#!" class="secondary-content"><i class="medium material-icons" (click) = showHistory(i)>view_list</i></a>
-                      </li>
-                      <hr style="display:none">
-                    </ng-scrollbar>
-                  </div>
-                  <a class="collection-item" (click)="showAddFriend()"><div style="font-size:15px">Add Record<a class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div></a>
-                </ul>
-                
-              </div> </ng-scrollbar>   
-        </div>
-          </mat-card-content>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <i class="fa fa-users" aria-hidden="true"></i>
-          </ng-template>
-          <ul class="collection" style="width:auto;" [style.opacity]="showHist?'0.2':'1'">
-                  <div style="height:auto" [style.overflow]="'auto'" [style.height.px]="240">
-                    <ng-scrollbar>
-                      <li class="collection-item avatar lig" *ngFor="let user of selectedGroup; let i = index" >
-                        <img src="assets/images/profile.png" alt="" class="circle">
-                        <span class="title res">{{user}}</span>
-                        <br>
-                        <p class="res" style="font-size:15px;"><br><span class="nowrap"></span> <span [style.color]="user.netamt>=0 ? 'green' : 'red'" class="nowrap">{{user.netamt}}</span> </p>
-                        <a href="#!" class="secondary-content"><i class="medium material-icons" (click) = showiHistory(i)>view_list</i></a>
-                      </li>
-                      <hr style="display:none">
-                    </ng-scrollbar>
-                  </div>
-                  <a class="collection-item" (click)="showAddFriend()"><div style="font-size:15px">Add Record<a class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div></a>
-                </ul>
-        </mat-tab>
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <i class="material-icons">notifications</i>
-
-            </ng-template>
-          </mat-tab>
-        </mat-tab-group>
-        <div *ngIf = "showAddFri" [style.overflow]="'auto'" style="background-color:white;border-color:black;color:black">
-          <i class="material-icons" (click)="showAddFriend()">arrow_back</i><ul *ngIf = "filteredfriends.length > 0" class="collection" style="background-color:white;border-radius:5px;border-color:black;width:auto;" [style.opacity]="showHist?'0.2':'1'">
-            <li>
-              <form (ngSubmit)="onSave()" #f="ngForm">
-                <mat-form-field class="demo-chip-list">
-                  <mat-chip-list #chipList>
-                    <mat-chip style="background:#e65c26" *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (remove)="remove(fruit)">
-                      {{fruit.friend}}
-                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                    </mat-chip>
-                    <input name='inpu' placeholder="Add friend..." [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" (keyup)="applyFriendsFilter($event.target.value, false)"
-                    />
-                  </mat-chip-list>
-                </mat-form-field>
-              </form>
-            </li>
-            <div [style.overflow]="'auto'" [style.height.px]="300">
-              <ng-scrollbar>
-                <li class="collection-item avatar lig" *ngFor="let friend of filteredfriends; let i = index" style="background-color:white;border-color:rgb(31, 31, 31)"
-                  (click)="addFriend(friend.friend)">
-                  <img src="assets/images/profile.png" alt="" class="circle">
-                  <span class="title res" style="color:black">{{friend.friend}}</span>
-                  <br>
-                  <p class="res" style="font-size:15px;color:black">
+              </mat-card-content>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <i class="fa fa-users" aria-hidden="true"></i>
+              </ng-template>
+              <ul class="collection" style="width:auto;" [style.opacity]="showHist?'0.2':'1'">
+                      <div style="height:auto" [style.overflow]="'auto'" [style.height.px]="290">
+                        <ng-scrollbar>
+                          <li class="collection-item avatar lig" *ngFor="let user of selectedGroup; let i = index" >
+                            <img src="assets/images/profile.png" alt="" class="circle">
+                            <span class="title res">{{user}}</span>
+                            <br>
+                            <p class="res" style="font-size:15px;"><br><span class="nowrap"></span> <span [style.color]="user.netamt>=0 ? 'green' : 'red'" class="nowrap">{{user.netamt}}</span> </p>
+                            <a  class="secondary-content"><i class="medium material-icons" (click) = showiHistory(i)>view_list</i></a>
+                          </li>
+                          <hr style="display:none">
+                        </ng-scrollbar>
+                      </div>
+                    </ul>          
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="material-icons">notifications</i>
+                </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+          <div *ngIf = "showAddFri" [style.overflow]="'auto'" style="background-color:white;border-color:black;color:black">
+            <i class="material-icons" (click)="showAddFriend()">arrow_back</i><ul *ngIf = "filteredfriends.length > 0" class="collection" style="background-color:white;border-radius:5px;border-color:black;width:auto;" [style.opacity]="showHist?'0.2':'1'">
+              <li>
+                <form (ngSubmit)="onSave()" #f="ngForm">
+                  <mat-form-field class="demo-chip-list">
+                    <mat-chip-list #chipList>
+                      <mat-chip style="background:#e65c26" *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (remove)="remove(fruit)">
+                        {{fruit.friend}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                      </mat-chip>
+                      <input name='inpu' placeholder="Add friend..." [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" (keyup)="applyFriendsFilter($event.target.value, false)"
+                      />
+                    </mat-chip-list>
+                  </mat-form-field>
+                </form>
+              </li>
+              <div [style.overflow]="'auto'" [style.height.px]="300">
+                <ng-scrollbar>
+                  <li class="collection-item avatar lig" *ngFor="let friend of filteredfriends; let i = index" style="background-color:white;border-color:rgb(31, 31, 31)"
+                    (click)="addFriend(friend.friend)">
+                    <img src="assets/images/profile.png" alt="" class="circle">
+                    <span class="title res" style="color:black">{{friend.friend}}</span>
                     <br>
-                    <span class="nowrap">5</span>
-                    <span [style.color]="5>=0 ? 'green' : 'red'" class="nowrap">6</span>
-                  </p>
-                  <a href="#!" class="secondary-content">
-                    <i class="medium material-icons" (click)="showGroupHistory(i)">view_list</i>
-                  </a>
-                </li>
-                <hr style="display:none">
-              </ng-scrollbar>
-            </div>
-          </ul>
-          <ul *ngIf="filteredfriends.length === 0">
-            All your friends are already in your group!
-          </ul>
-        </div>
-          <mat-card-actions>
-            <i class="material-icons" style="font-size: 30px " (click)=closeGroup()>cancel</i>
+                    <p class="res" style="font-size:15px;color:black">
+                      <br>
+                      <span class="nowrap">5</span>
+                      <span [style.color]="5>=0 ? 'green' : 'red'" class="nowrap">6</span>
+                    </p>
+                    <a  class="secondary-content">
+                      <i class="medium material-icons" (click)="showGroupHistory(i)">view_list</i>
+                    </a>
+                  </li>
+                  <hr style="display:none">
+                </ng-scrollbar>
+              </div>
+            </ul>
+            <ul *ngIf="filteredfriends.length === 0">
+              All your friends are already in your group!
+            </ul>
+          </div>
+          <mat-card-actions style="padding-top:0px">
+            <i class="material-icons" style="font-size: 30px " (click)="showGroupDetail = !showGroupDetail">cancel</i>
           </mat-card-actions>
         </mat-card>
       </div>
@@ -223,18 +279,21 @@
                   <span class="nowrap">{{group.g_type }}</span>
                   <span [style.color]="group.id>=0 ? 'green' : 'red'" class="nowrap">{{group.id}}</span>
                 </p>
-                <a href="#!" class="secondary-content">
+                <a  class="secondary-content">
                   <i class="medium material-icons" (click)="showGroupHistory(group.id)">view_list</i>
                 </a>
               </li>
               <hr style="display:none">
             </ng-scrollbar>
           </div>
+          <hr>
+          <a (click)="createGroupDialog()" class="collection-item"><i  [class.grey-settings]="mouseOvered.addGroup"
+            (mouseover)="mouseOvered.addGroup=true" (mouseout)="mouseOvered.addGroup=false" class="material-icons">group_add</i> Create a new Group</a>
         </ul>
       </div>
     </div>
   </div>
-  <div class="overlay" [style.display]="showGroupDetailssss ? 'block' : 'none'">
+  <div class="overlay" [style.display]="'none'">
     <mat-progress-spinner class="example-margin" [color]='color' [mode]='mode'
       style="margin:0 auto;" *ngIf="loadingGroupDetails">
     </mat-progress-spinner>

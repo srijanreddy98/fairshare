@@ -1,8 +1,8 @@
-<div *ngIf = "!tryAddExp && !successAddExp && !errorAddExp">
+<!-- <div *ngIf = "!tryAddExp && !successAddExp && !errorAddExp"> -->
   <form class="col-s12" role="form" class="example-form" (ngSubmit)="onSave()" #f="ngForm">
     <div class="row">
       <div class="input-field col s12">
-      <input [formControl]="myControl" id="email" type="email" class="validate" [matAutocomplete]="auto"  name="usernam" [(ngModel)]="username">
+      <input id="email" type="email" class="validate" [matAutocomplete]="auto"  name="usernam" [(ngModel)]="username">
       <label for="email">Username</label>
     </div>
     </div>
@@ -44,16 +44,16 @@
         </mat-form-field> -->
         
       <div class="input-field col s12">
-        <input id="textarea1" class="materialize-textarea" ngModel name="descrip" data-length="20" maxlength="20" placeholder="Description" [disabled]="username==='' || addexpamt === ''|| NOT==='' ? true : false">
+        <input id="textarea1" class="materialize-textarea" ngModel name="descrip" data-length="20" maxlength="20" [disabled]="username==='' || addexpamt === ''|| NOT==='' ? true : false">
       </div>
       <button mat-raised-button>Submit</button>
     </form>
-</div>
-<div *ngIf = "tryAddExp && !successAddExp && !errAddExp"><mat-progress-spinner class="example-margin"  [color]='color' [mode]='mode' style="margin:0 auto;">
+<!-- </div> -->
+<!-- <div *ngIf = "tryAddExp && !successAddExp && !errAddExp"><mat-progress-spinner class="example-margin"  [color]='color' [mode]='mode' style="margin:0 auto;">
 </mat-progress-spinner></div>
 <div *ngIf="!tryAddExp && successAddExp && !errAddExp">
   Success! <button class="btn btn-info" (click)="return()" >Return</button>
 </div>
 <div *ngIf="!tryAddExp && !successAddExp && errAddExp">
   Couldn't Add Your Expense <button class="btn btn-info" (click)="return()">Return</button>
-</div>
+</div> -->

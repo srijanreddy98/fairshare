@@ -7,6 +7,8 @@ import {Routes, RouterModule} from '@angular/router';
 import { CookieModule } from 'ngx-cookie';
 
 
+import { DialogOverviewExampleDialog, AddFriendsDialogComponent,
+  CreateGroupDialogComponent } from './usermain/screen/groups/groups.component';
 import { MaterializeModule } from 'angular2-materialize';
 import { AppComponent } from './app.component';
 import { ServerService } from './login/server.service';
@@ -15,7 +17,7 @@ import { LoginComponent } from './login/login.component';
 import { SignService } from './signup/sign.service';
 import { SignupComponent } from './signup/signup.component';
 import { MainComponent } from './main/main.component';
-import { UsermainComponent } from './usermain/usermain.component';
+import { UsermainComponent, friendBoxComponent } from './usermain/usermain.component';
 import { ProfileComponent } from './usermain/profile/profile.component';
 import { ScreenComponent } from './usermain/screen/screen.component';
 import { RecentActionsComponent } from './usermain/screen/recent-actions/recent-actions.component';
@@ -23,17 +25,22 @@ import { IndividualComponent } from './usermain/screen/individual/individual.com
 import { GroupsComponent } from './usermain/screen/groups/groups.component';
 import { MaterialModule } from './material.module';
 import { UpperCardComponent } from './upper-card/upper-card.component';
-import { TablesComponent } from './tables/tables.component';
+import { TablesComponent, AddRecordComponent } from './tables/tables.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { AddFriendsComponent } from './add-friends/add-friends.component';
 import { ProfileService } from './usermain/profile/profile.service';
 import { GroupService } from './usermain/screen/groups/group.service';
 import { ScrollbarModule } from 'ngx-scrollbar';
 import { FriendlistComponent } from './friendlist/friendlist.component';
-import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-
-
+import { NotificationsComponent } from './notifications/notifications.component';
+import { DatePipe } from '@angular/common';
+import { MessagesComponent } from './messages/messages.component';
+import { PersonalComponent } from './personal/personal.component';
+import { ActivityComponent } from './activity/activity.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { AddRecordDialogComponent } from './usermain/screen/groups/groups.component';
+import { ServerComponent } from './server/server.component';
 const appRoutes: Routes = [
   {
     path: 'login',
@@ -55,6 +62,10 @@ const appRoutes: Routes = [
         path: 'screen',
         component: ScreenComponent,
         children: [
+          {
+            path: 'personal',
+            component: PersonalComponent
+          },
           {
             path: 'individual',
             component: IndividualComponent
@@ -93,7 +104,17 @@ const appRoutes: Routes = [
     TablesComponent,
     AutocompleteComponent,
     AddFriendsComponent,
-    FriendlistComponent
+    FriendlistComponent,
+    NotificationsComponent,
+    AddRecordComponent,
+    friendBoxComponent,
+    MessagesComponent,
+    DialogOverviewExampleDialog, AddFriendsDialogComponent,
+  CreateGroupDialogComponent,
+  PersonalComponent, ActivityComponent,
+    SidenavComponent, AddRecordDialogComponent,
+    ServerComponent
+
   ],
   imports: [
     BrowserModule,
@@ -104,11 +125,11 @@ const appRoutes: Routes = [
     CookieModule.forRoot(),
     MaterialModule,
     BrowserAnimationsModule,
-    ScrollbarModule,
-    Ng2GoogleChartsModule,
-    NgxChartsModule
+    ScrollbarModule,    NgxChartsModule
   ],
-  providers: [ServerService, SignService, UserService, ProfileService, GroupService],
-  bootstrap: [AppComponent]
+  providers: [ServerService, SignService, UserService, ProfileService, GroupService,DatePipe],
+  bootstrap: [AppComponent],  
+  entryComponents: [AddRecordComponent,friendBoxComponent,  DialogOverviewExampleDialog, AddFriendsDialogComponent,
+    CreateGroupDialogComponent]
 })
 export class AppModule { }

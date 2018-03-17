@@ -1,0 +1,66 @@
+<mat-dialog-content style="padding:10%">
+    <form  #f="ngForm">
+        <input type="text" name="groupname" ngModel>
+        <mat-button-toggle-group #group="matButtonToggleGroup" style="width: 480px" (change)="selectedToggleChange($event)">
+            <mat-button-toggle value="AP" style="min-width: 90px; width:90px">
+                Apartment
+            </mat-button-toggle>
+            <mat-button-toggle value="PA" style="min-width: 90px; width:90px">
+                House
+            </mat-button-toggle>
+            <mat-button-toggle value="TR" style="min-width: 90px; width:90px">
+                Trip
+            </mat-button-toggle>
+            <mat-button-toggle value="OT" style="min-width: 90px; width:90px">
+                Others
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </form>
+<h4>Add Friends</h4>
+    <div [style.overflow]="'auto'" style="background-color:white;border-color:black;color:black">
+        <ul *ngIf="!startingLength" class="collection" style="background-color:white;border-radius:5px;border-color:black;width:auto;"
+            [style.opacity]="showHist?'0.2':'1'">
+            <li>
+                <form (ngSubmit)="onSave()" #f="ngForm">
+                    <mat-form-field class="demo-chip-list">
+                        <mat-chip-list #chipList>
+                            <mat-chip style="background:#e65c26" *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (remove)="remove(fruit)">
+                                {{fruit.friend}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input name='inpu' placeholder="Add friend..." [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" (keyup)="applyFriendsFilter($event.target.value, false)"
+                            />
+                        </mat-chip-list>
+                    </mat-form-field>
+                </form>
+            </li>
+            <div [style.overflow]="'auto'" [style.height.px]="300">
+                <ng-scrollbar>
+                    <li class="collection-item avatar lig" *ngFor="let friend of filteredfriends; let i = index" style="background-color:white;border-color:rgb(31, 31, 31)"
+                        (click)="addFriend(friend.friend)">
+                        <img src="assets/images/profile.png" alt="" class="circle">
+                        <span class="title res" style="color:black">{{friend.friend}}</span>
+                        <br>
+                        <p class="res" style="font-size:15px;color:black">
+                            <br>
+                            <span class="nowrap">5</span>
+                            <span [style.color]="5>=0 ? 'green' : 'red'" class="nowrap">6</span>
+                        </p>
+                        <a class="secondary-content">
+                            <i class="medium material-icons">view_list</i>
+                        </a>
+                    </li>
+                    <hr style="display:none">
+                </ng-scrollbar>
+            </div>
+        </ul>
+        <ul *ngIf="startingLength">
+            All your friends are already in your group!
+        </ul>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="func()">Create Group</button>
+    <button mat-button (click)="dialogRef.close()">Back</button>
+</mat-dialog-actions>
